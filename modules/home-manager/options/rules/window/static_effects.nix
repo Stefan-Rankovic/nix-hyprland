@@ -1,0 +1,139 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
+
+{
+    forceNonNullIn,
+    lib,
+    localTypes,
+    mkNullOption,
+    ...
+}:
+
+let
+    inherit (lib) mkOption types;
+
+    strWithoutSuffixType = suffix: types.addCheck types.str (v: !(lib.hasSuffix suffix v));
+
+    falseOption = mkOption {
+        type = types.bool;
+        default = false;
+    };
+in
+{
+    float = mkNullOption {
+        type = types.bool;
+        description = "Floats a window.";
+    };
+
+    tile = mkNullOption {
+        type = types.bool;
+        description = "Tiles a window.";
+    };
+
+    fullscreen = mkNullOption {
+        type = types.bool;
+        description = "Fullscreens a window.";
+    };
+
+    maximize = mkNullOption {
+        type = types.bool;
+        description = "Maximizes a window.";
+    };
+
+    fullscreen_state = mkNullOption {
+        type = types.str;
+        description = ''
+            Sets the fullscreen mode, e.g. `\"1 2\" (internal client).
+            - `0`: None.
+            - `1`: Maximize.
+            - `2`: Fullscreen.
+            - `3`: Maximize and fullscreen.
+        '';
+    };
+
+    move = mkNullOption {
+        type = types.str;
+        description = "Moves a floating window to a given coordinate, monitor-local. E.g. `{100, 200}` or `{\"cursor_x-(window_w*0.5))\", \"(cursor_y-(window_h*0.5))\"}`.";
+    };
+
+    size = mkNullOption {
+        type = types.str;
+        description = "Resizes a floating window. E.g. `{800, 600}` or `{\"(monitor_w*0.5)\", \"(monitor_h*0.5)\"}`.";
+    };
+
+    center = mkNullOption {
+        type = types.bool;
+        description = "If the window is floating, will center it on the monitor.";
+    };
+
+    pseudo = mkNullOption {
+        type = types.bool;
+        description = "Pseudotiles a window.";
+    };
+
+    monitor = mkNullOption {
+        type = types.either (strWithoutSuffixType " silent") (
+            types.submodule {
+                options = {
+                    monitor = mkOption { type = types.str; };
+                    silent = falseOption;
+                };
+            }
+        );
+        description = "Sets the monitor on which a window should open. E.g. `\"1\"` or `\"DP-1\"`.";
+    };
+
+    workspace = mkNullOption {
+        type = types.either (strWithoutSuffixType " silent") (
+            types.submodule {
+                options = {
+                    workspace = mkOption { type = types.str; };
+                    silent = falseOption;
+                };
+            }
+        );
+        description = "Sets the workspace on which a window should open. Can also be \"unset\".";
+    };
+
+    no_initial_focus = mkNullOption {
+        type = types.bool;
+        description = "Disables the initial focus to the window.";
+    };
+
+    pin = mkNullOption {
+        type = types.bool;
+        description = "Pins the window (i.e. show it on all workspaces). *Note: floating only.*";
+    };
+
+    # group = todo
+
+    suppress_event = mkNullOption {
+        type = forceNonNullIn (
+            types.submodule {
+                options = {
+                    fullscreen = falseOption;
+                    maximize = falseOption;
+                    activate = falseOption;
+                    activatefocus = falseOption;
+                    fullscreenoutput = falseOption;
+                };
+            }
+        );
+        description = "Floats a window.";
+    };
+
+    content = mkNullOption {
+        type = localTypes.content_type;
+        description = "Sets content type.";
+    };
+
+    no_close_for = mkNullOption {
+        type = types.ints.positive;
+        description = "Makes the window uncloseable with `killactive` for a given number of ms on open.";
+    };
+
+    scrolling_width = mkNullOption {
+        type = types.ints.positive;
+        description = "Set column width for window when starting on a workspace with the scrolling layout.";
+    };
+}

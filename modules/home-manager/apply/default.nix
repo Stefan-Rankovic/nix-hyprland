@@ -1,0 +1,82 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
+
+{
+    config,
+    exactlyOneNonNullSubmodule,
+    lib,
+    localTypes,
+    luaFunctionArguments,
+    mkNullOption,
+    mkNullSubmodule,
+    ...
+}:
+
+let
+    cfg = config.nix-hyprland;
+
+    filterNullsRecursive =
+        attrs:
+        lib.pipe attrs [
+            (lib.filterAttrs (_: v: v != null))
+            (lib.mapAttrs (_: v: if (lib.isAttrs v) then (filterNullsRecursive v) else v))
+        ];
+
+    binds = import ./binds {
+        inherit
+            config
+            exactlyOneNonNullSubmodule
+            filterNullsRecursive
+            lib
+            localTypes
+            luaFunctionArguments
+            mkNullOption
+            mkNullSubmodule
+            ;
+    };
+    dispatchers = import ./monitors {
+        inherit
+            config
+            filterNullsRecursive
+            lib
+            luaFunctionArguments
+            ;
+    };
+    monitors = import ./monitors { inherit config filterNullsRecursive lib; };
+    rules = import ./rules { inherit config filterNullsRecursive lib; };
+
+    others = {
+        inherit (cfg)
+            decoration
+            general
+            group
+            input
+            gestures
+            misc
+            opengl
+            quirks
+            ;
+    };
+    othersFiltered = filterNullsRecursive others;
+    othersLua = lib.generators.toLua { } othersFiltered;
+    othersString = "hl.config(${othersLua})";
+
+    programLuaConfig = lib.concatStringsSep "\n" (
+        [
+            monitors
+            rules
+            binds
+            dispatchers
+        ]
+        ++ (lib.optional (othersFiltered != { }) othersString)
+    );
+
+    luaConfig = lib.concatStringsSep "\n" [
+        cfg.extraLuaConfigPre
+        programLuaConfig
+        cfg.extraLuaConfigPost
+    ];
+in
+lib.mkIf cfg.enable {
+    xdg.configFile."hypr/hyprland.lua".text = luaConfig;
+}
