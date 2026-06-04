@@ -172,7 +172,7 @@ equivalent to:
 
 ```nix
 nix-hyprland.binds = {
-    mainMod.enable =true;
+    mainMod.enable = true;
     list = {
         "T".dsp.exec_cmd.cmd = "uwsm app -- kitty";
         "B".dsp.exec_cmd.cmd = "uwsm app -- firefox";
@@ -239,7 +239,7 @@ that, you can set `nix-hyprland.binds.mouse.keys` to a string (e.g. `"ALT"` or
 > };
 > ```
 
-### Multiple Binds Per Key
+#### Multiple Binds Per Key
 
 You may want to bind some key combination to use two dispatchers (or the same
 dispatcher twice). Unfortunately that is not possible by simply doing something
@@ -268,6 +268,12 @@ nix-hyprland.binds.list."..." = [
 In the [Binds](#binds) section above, you could see there's a `dsp` field for
 every bind. That's short for dispatchers.
 
+> [!WARNING]
+> Using them should be fine, but since I don't use most of them, they aren't
+> really tested.
+>
+> If you encounter one that doesn't work, please open an issue!
+
 #### Usage
 
 You can use them in binds as actions, or you can directly run them on Hyprland
@@ -282,15 +288,9 @@ nix-hyprland.dispatchers = [
 
 There are some dispatchers that take no arguments (e.g. `exit` or `window.kill`
 (the latter does take one argument but it's optional)). For example, to use one
-in a bind, you would do `nix-hyprland.binds.list."...".dsp.exit = {};` (don't do
-that though because of UWSM, this is an example to show syntax, not
-functionality) or `nix-hyprland.binds.list."...".dsp.window.kill = {};`.
-
-> [!WARNING]
-> Using them should be fine, but since I don't use most of them, they aren't
-> really tested.
->
-> If you encounter one that doesn't work, please open an issue!
+in a bind, you would do `nix-hyprland.binds.list."...".dsp.exit = {};` (this is
+an example to show syntax, not functionality; do not use `exit`) or
+`nix-hyprland.binds.list."...".dsp.window.kill = {};`.
 
 #### List
 
