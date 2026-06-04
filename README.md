@@ -5,7 +5,7 @@
 
 ## Description
 
-A tool to configure [Hyprland](hypr.land) using Nix.
+A tool to configure [Hyprland](https://hypr.land) using Nix.
 
 > [!IMPORTANT]
 > For basic use, this is ready. But some things are broken, improperly
