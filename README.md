@@ -418,8 +418,17 @@ seen on
 
 ###### Opacity
 
-In Hyprland, opacity is just a string. But here it is an attribute set to be
-declaratively set. In Hyprland, what would be `"1.0 0.5 0.9"` is here:
+In Hyprland, the value of `opacity` is just a string. But here it is an
+attribute set to be declaratively set[^4]. In Hyprland, what would be
+`"1.0 0.5 0.9"` is here:
+
+[^4]: That is because Hyprland doesn't directly map to an attribute set. Setting
+    just one value defaults it to all three, for example. I had two
+    options—hard-code a default value for all three or have you handle it. I
+    chose the latter because Hyprland's API could change at any moment. Another
+    reason is consistency. Every other thing is also `null` by default (see the
+    notes in [Configuration](#configuration)) which is because I didn't want to
+    hard-code one.
 
 ```nix
 {
