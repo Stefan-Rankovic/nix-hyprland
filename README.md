@@ -310,7 +310,7 @@ nix-hyprland.binds."...".dsp.raw_lua = ''
         hl.timer(function()
             hl.dispatch(hl.dsp.dpms({ action = "disable" }))
         end, {timeout = 500, type = "oneshot"})
-    end)
+    end
 '';
 ```
 
@@ -380,8 +380,8 @@ Translating `"0.5 override 1.0 0.1"` would look like:
         value = 0.5;
         override = true;
     };
-    inactive = 1.0;
-    fullscreen = 0.1;
+    inactive.value = 1.0;
+    fullscreen.value = 0.1;
 }
 ```
 

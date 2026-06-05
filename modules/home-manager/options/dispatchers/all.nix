@@ -241,7 +241,7 @@ in
                     hl.timer(function()
                         hl.dispatch(hl.dsp.dpms({ action = "disable" }))
                     end, {timeout = 500, type = "oneshot"})
-                end)
+                end
             ''';
             ```
         '';
