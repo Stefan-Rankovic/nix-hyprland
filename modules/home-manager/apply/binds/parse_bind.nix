@@ -20,11 +20,11 @@ let
     # === Dsp ===
     dspCallLua = import ../dispatchers/parse_dispatcher.nix {
         inherit
-            bind
             filterNullsRecursive
             lib
             luaFunctionArguments
             ;
+        dispatcher = bind.dsp;
     };
 
     # === All arguments ===
