@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
+    checkHyprlandVersion,
     lib,
     localTypes,
     mkNullOption,
@@ -27,6 +28,7 @@ in
             type = types.package;
             example = pkgs.hyprland;
             description = "The hyprland package to use. If you use the nixos module, don't change this. Otherwise, set it.";
+            apply = pkg: if pkg == null then pkg else checkHyprlandVersion pkg;
         };
         xdg_portal = {
             enable = lib.mkEnableOption "XDG portal and integrate it with Hyprland";

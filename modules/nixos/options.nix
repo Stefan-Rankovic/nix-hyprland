@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
+    checkHyprlandVersion,
     lib,
     pkgs,
     ...
@@ -18,17 +19,7 @@ in
             type = types.package;
             default = pkgs.hyprland;
             description = "The hyprland package to use.";
-            apply =
-                pkg:
-                let
-                    currentVersion = "0.55.0";
-                in
-                if pkg.version == currentVersion then
-                    pkg
-                else if lib.versionOlder pkg.version currentVersion then
-                    lib.warn "nix-hyprland: This version of nix-hyprland was made for Hyprland ${currentVersion}. Your Hyprland version is older than that. Please update Hyprland or downgrade nix-hyprland." pkg
-                else
-                    lib.warn "nix-hyprland: This version of nix-hyprland was made for Hyprland ${currentVersion}. Your Hyprland version is newer than that. Please update nix-hyprland or downgrade Hyprland." pkg;
+            apply = checkHyprlandVersion;
         };
         uwsm.runner = lib.mkOption {
             type = types.nullOr types.package;

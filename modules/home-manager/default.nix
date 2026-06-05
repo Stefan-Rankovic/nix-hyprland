@@ -100,6 +100,11 @@ in
             ;
     };
 
+    imports = [
+        ./apply
+        ./options
+    ];
+
     xdg.portal = {
         inherit (cfg.xdg_portal) enable;
         extraPortals = builtins.attrValues cfg.xdg_portal.extraPortals;
@@ -116,9 +121,4 @@ in
         portalPackage = cfg.xdg_portal.package;
     };
     home.packages = lib.optional (cfg.enable && (cfg.uwsm.runner != null)) cfg.uwsm.runner;
-
-    imports = [
-        ./apply
-        ./options
-    ];
 }
