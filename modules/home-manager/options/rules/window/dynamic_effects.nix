@@ -7,7 +7,6 @@
     localTypes,
     mkNullOption,
     mkNullSubmodule,
-    ...
 }:
 
 let
@@ -30,7 +29,7 @@ in
     };
 
     animation = mkNullOption {
-        type = types.str; # todo: maybe make custom type?
+        type = types.str;
         description = "Forces an animation onto a window with an optional style. E.g. `\"popin\"` or `\"popin 80%\"`.";
     };
 
