@@ -9,7 +9,7 @@
 }:
 
 let
-    merged = lib.unionOfDisjoint {
+    merged = lib.attrsets.unionOfDisjoint {
         inherit name;
         inherit (rule) match;
     } rule.effects;
