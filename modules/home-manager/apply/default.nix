@@ -34,7 +34,7 @@ let
             mkNullSubmodule
             ;
     };
-    dispatchers = import ./monitors {
+    dispatchers = import ./dispatchers {
         inherit
             config
             filterNullsRecursive
