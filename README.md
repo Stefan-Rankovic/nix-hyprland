@@ -110,7 +110,7 @@ nix-hyprland = {
 ```
 
 The list of available options can be seen on
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Variables/).
+[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Variables/#sections).
 
 ### Monitors
 
@@ -339,13 +339,13 @@ nix-hyprland.rules.window."float-kitty" = {
 };
 ```
 
-##### Match
+##### Match (Window)
 
 This part defines what the window rule applies to. There are a lot of options
 here, all of which available on
 [the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#props).
 
-##### Effects
+##### Effects (Window)
 
 This part defines what the window rule actually does. Available options can be
 seen on
