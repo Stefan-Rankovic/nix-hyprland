@@ -23,7 +23,7 @@ if (firstLevelName == "raw_lua") then
 else
     let
         # === Import arguments ===
-        allArguments = import ./dsp_arguments { inherit lib; };
+        allArguments = import ./arguments { inherit lib; };
 
         # Is the dsp a top level one such as `exec_cmd` or a nested one like `window.kill`
         isTopLevel = builtins.hasAttr "unnamed" allArguments.${firstLevelName};
