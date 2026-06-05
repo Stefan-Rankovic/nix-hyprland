@@ -495,6 +495,9 @@ nix-hyprland.rules.window = {
 > example) an active non-floating `Kitty` window will have an opacity of `2.0`.
 > Any opacity over `1.0` causes graphical glitches.
 
+This is all also documented at the bottom of
+[Notes](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#notes).
+
 #### Layer
 
 Some things in Wayland are not windows, but layers (e.g. app launchers, status
