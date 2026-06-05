@@ -4,20 +4,19 @@
 {
     lib,
 }:
-# todo: add more DSPs (and thus files)
 
 let
     mkArguments =
         {
-            unnamed ? [ ],
+            unnamed ? [ ], # The list of unnamed arguments at the top level
             # todo: maybe rework to take lists?
             getUnnamedFromPre ? null,
             getUnnamedFromPost ? null,
-            isUnnamed ? false,
-            named ? [ ],
-            getNamedFrom ? [ ],
-            getFromOrAreNamed ? [ ], # todo: maybe add an unnamed equivalent?
-            isNamed ? false,
+            isUnnamed ? false, # Whether the dispatcher itself is an unnamed argument
+            named ? [ ], # The list of named arguments at the top level
+            getNamedFrom ? [ ], # The list of locations to get named arguments from (if they are nested)
+            getFromOrAreNamed ? [ ], # The list of locations to get either one or multiple named arguments
+            isNamed ? false, # Whether the dispatcher itself is a named argument (the argument name is the dispatcher's name)
         }:
         assert lib.isList unnamed;
         assert (lib.isString getUnnamedFromPre) || (getUnnamedFromPre == null);
