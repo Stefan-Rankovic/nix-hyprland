@@ -10,7 +10,7 @@
 }:
 
 exactlyOneNonNullSubmodule {
-    options = import ./default.nix {
+    options = import ./all.nix {
         inherit
             exactlyOneNonNullSubmodule
             lib
