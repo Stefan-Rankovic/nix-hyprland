@@ -8,8 +8,8 @@
 }:
 
 let
-    layerRules = import ./layerrules { inherit filterNullsRecursive lib; };
-    windowRules = import ./windowrules { inherit config filterNullsRecursive lib; };
+    layerRules = import ./layer { inherit config filterNullsRecursive lib; };
+    windowRules = import ./window { inherit config filterNullsRecursive lib; };
 in
 lib.concatStringsSep "\n" [
     layerRules

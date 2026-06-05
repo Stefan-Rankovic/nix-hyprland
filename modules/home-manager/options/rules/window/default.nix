@@ -44,6 +44,7 @@ let
                 lib
                 localTypes
                 mkNullOption
+                mkNullSubmodule
                 ;
         };
     };
