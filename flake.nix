@@ -23,11 +23,7 @@
                     lib.warn "nix-hyprland: This version of nix-hyprland was made for Hyprland ${hyprlandVersion}. Your Hyprland version is newer than that. Please update nix-hyprland or downgrade Hyprland." pkg;
         in
         {
-            homeManagerModules.default = import ./modules/home-manager/default.nix {
-                inherit checkHyprlandVersion;
-            };
-            nixosModules.default = import ./modules/nixos/default.nix {
-                inherit checkHyprlandVersion;
-            };
+            homeManagerModules.default = import ./modules/home-manager/default.nix checkHyprlandVersion;
+            nixosModules.default = import ./modules/nixos/default.nix checkHyprlandVersion;
         };
 }

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
+checkHyprlandVersion:
 {
     config,
     lib,
@@ -92,6 +93,7 @@ in
         inherit
             doubleElement
             exactlyOneNonNullSubmodule
+            checkHyprlandVersion
             forceNonNullIn
             localTypes
             luaFunctionArguments
