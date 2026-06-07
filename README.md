@@ -98,7 +98,8 @@ Things documented here seek to serve a syntax guide, not a logic one.
 ### Compatibility with Home Manager
 
 There is no extra setup needed. Due to Nix merging multiline strings, you can
-use both Home Manager and nix-hyprland.
+use both Home Manager options (`wayland.windowManager.hyprland.*`) and
+nix-hyprland.
 
 #### What Does This Mean for Stylix?
 
