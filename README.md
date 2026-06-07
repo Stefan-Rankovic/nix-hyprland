@@ -332,12 +332,6 @@ bind. That's short for "dispatcher".
 There's a lot of them, and the full list (and their documentation) can be found
 on [the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Dispatchers/).
 
-> [!WARNING]
-> Using them should be fine, but since I don't use most of them, they aren't
-> really tested.
->
-> If you encounter one that doesn't work, please open an issue!
-
 You can use them in binds as actions (as shown in [Binds](#binds)), or you can
 directly run them on Hyprland startup. The latter would look like:
 
