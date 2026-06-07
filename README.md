@@ -9,10 +9,9 @@ A tool to configure [Hyprland](https://hypr.land) using Nix. Made because Home
 Manager's syntax is (in my opinion) pretty bad.
 
 > [!IMPORTANT]
-> For basic use, this is ready. But some things are broken, improperly
-> documented, or just not implemented yet. I just wanted to get this pushed to
-> GitHub as soon as possible and will fix/document/implement a lot of things in
-> the next few days.
+> For basic use, this is ready. But some things are broken or not implemented
+> yet[^4]. I just wanted to get this pushed to GitHub as soon as possible and
+> will fix/document/implement a lot of things in the next few days.
 
 ## Requirements
 
@@ -416,16 +415,8 @@ seen on
 ###### Opacity
 
 In Hyprland, the value of `opacity` is just a string. But here it is an
-attribute set to be declaratively set[^4]. In Hyprland, what would be
+attribute set to be declaratively set. In Hyprland, what would be
 `"1.0 0.5 0.9"` is here:
-
-[^4]: That is because Hyprland doesn't directly map to an attribute set. Setting
-    just one value defaults it to all three, for example. I had two
-    options—hard-code a default value for all three or have you handle it. I
-    chose the latter because Hyprland's API could change at any moment. Another
-    reason is consistency. Every other thing is also `null` by default (see the
-    notes in [Configuration](#configuration)) which is because I didn't want to
-    hard-code one.
 
 ```nix
 {
@@ -435,7 +426,15 @@ attribute set to be declaratively set[^4]. In Hyprland, what would be
 }
 ```
 
-All three of those options are required.
+All three of those options are required.[^3]
+
+[^3]: That is because Hyprland doesn't directly map to an attribute set. Setting
+    just one value defaults it to all three, for example. I had two
+    options—hard-code a default value for all three or have you handle it. I
+    chose the latter because Hyprland's API could change at any moment. Another
+    reason is consistency. Every other thing is also `null` by default (see the
+    notes in [Configuration](#configuration)) which is because I didn't want to
+    hard-code one.
 
 Translating `"0.5 override 1.0 0.1"` would look like:
 
@@ -516,7 +515,7 @@ the effects, I'm pretty sure all of them are `static`.
 
 #### Workspace Rules
 
-This is a todo.[^3]
+This is a todo.[^4]
 
 #### Unnamed Rules
 
@@ -550,27 +549,27 @@ There are mainly two differences between using unnamed and named rules:
 
 ### Layouts
 
-This is a todo.[^3]
+This is a todo.[^4]
 
-### Animations[^3]
+### Animations
 
-This is a todo.[^3]
+This is a todo.[^4]
 
 ### Gestures
 
-This is a todo.[^3]
+This is a todo.[^4]
 
 ### Devices
 
-This is a todo.[^3]
+This is a todo.[^4]
 
 ### Permissions
 
-This is a todo.[^3]
+This is a todo.[^4]
 
 ### Notifications
 
-This is a todo.[^3]
+This is a todo.[^4]
 
 ### Environment variables
 
@@ -584,7 +583,7 @@ on this.
 
 ### Plugins
 
-This is a todo.[^3] For now, you can use
+This is a todo.[^4] For now, you can use
 `wayland.windowManager.hyprland.plugins` (in Home Manager).
 
 ## License
@@ -596,7 +595,7 @@ This project is licensed under GPL-3.0-or-later and is REUSE-compliant.
 > this tool (which is nonsense anyway) or me. Thus, it is not subject to the
 > project's license and you are free to do whatever you want with it.
 
-[^3]: A lot of features do not exist inside nix-hyprland. I don't use them so
+[^4]: A lot of features do not exist inside nix-hyprland. I don't use them so
     they were a lower priority on my implementation list. But they aren't
     forever unimplemented, but a todo. What you can do about this is fork the
     repository and implement it on your own, put things inside
