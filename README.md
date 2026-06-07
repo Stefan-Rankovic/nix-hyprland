@@ -593,9 +593,20 @@ This is a todo.[^4]
 
 ### Notifications
 
-This is a todo.[^4]
+They do not exist inside this project. I simply see no need in implementing
+them, as I don't see where they would be used. They can only be used to push a
+one-time notification, as `if` blocks don't exist either (I'm not sure if
+they're even supported in Hyprland itself). And there are various better methods
+to do that. The only use case I see for them is as a keybind effect, but that's
+taken care of by the [`raw_lua` dispatcher](#raw-lua). In any case you're better
+using a notification manager (even said on the
+[wiki](https://wiki.hypr.land/Configuring/Advanced-and-Cool/Notifications/)
+note).
 
-### Environment variables
+If anyone were to find a use case for it, please open an issue! I'll try to
+implement it.
+
+### Environment Variables
 
 This feature does not and will probably never exist in nix-hyprland. Because it
 is unnecessary. That feature in Hyprland mainly exists for non-UWSM users, and
