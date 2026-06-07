@@ -7,16 +7,22 @@
     name,
     lib,
 }:
+assert builtins.isFunction filterNullsRecursive;
+assert builtins.isAttrs rule;
+assert builtins.isString name || name == null;
 
 let
-    merged = lib.attrsets.unionOfDisjoint {
-        inherit name;
-        inherit (rule) match;
-    } rule.effects;
+    merged = lib.foldl' lib.attrsets.unionOfDisjoint { } [
+        {
+            inherit (rule) match;
+        }
+        rule.effects
+        (lib.optionalAttrs (name != null) { inherit name; })
+    ];
 
     filtered = filterNullsRecursive merged;
 in
 if rule.enable then
     "hl.layer_rule(${lib.generators.toLua { } filtered})"
 else
-    "-- Layer rule \"${name}\" disabled"
+    "-- Layer rule with name \"${name}\" disabled"

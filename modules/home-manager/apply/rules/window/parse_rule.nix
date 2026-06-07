@@ -7,15 +7,18 @@
     name,
     lib,
 }:
+assert builtins.isFunction filterNullsRecursive;
+assert builtins.isAttrs rule;
+assert builtins.isString name || name == null;
 
 let
     baseMergedWithNulls = lib.foldl' lib.attrsets.unionOfDisjoint { } [
         {
-            inherit name;
             inherit (rule) match;
         }
         rule.effects.static
         rule.effects.dynamic
+        (lib.optionalAttrs (name != null) { inherit name; })
     ];
 
     baseMerged = filterNullsRecursive baseMergedWithNulls;
@@ -69,4 +72,4 @@ in
 if rule.enable then
     "hl.window_rule(${lib.generators.toLua { } merged})"
 else
-    "-- Window rule \"${name}\" disabled"
+    "-- Window rule with name \"${name}\" disabled"

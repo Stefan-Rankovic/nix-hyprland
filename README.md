@@ -377,16 +377,13 @@ nix-hyprland.binds."...".dsp.raw_lua = ''
 
 ### Rules
 
-Rules are split into three groups—[window](#window), [layer](#layer), and
-[workspace](#workspace) rules.
-
-Unnamed rules are currently not supported (for those you'd have to use
-`extraLuaConfigPre` or `extraLuaConfigPost`). This is a todo.
+Rules are split into three groups—[window](#window-rules),
+[layer](#layer-rules), and [workspace](#workspace-rules) rules.
 
 Disabling rules is the same as disabling binds. Instead of commenting them out,
 just add `enable = false;`.
 
-#### Window
+#### Window Rules
 
 These are also, unlike in Home Manager, defined with attribute sets. To define a
 window rule that makes all Kitty windows float, you can do:
@@ -398,13 +395,13 @@ nix-hyprland.rules.window."float-kitty" = {
 };
 ```
 
-##### Match (Window)
+##### Match (Window Rules)
 
 This part defines what the window rule applies to. There are a lot of options
 here, all of which available on
 [the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#props).
 
-##### Effects (Window)
+##### Effects (Window Rules)
 
 This part defines what the window rule actually does. Available options can be
 seen on
@@ -498,17 +495,17 @@ nix-hyprland.rules.window = {
 This is all also documented at the bottom of
 [Notes](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#notes).
 
-#### Layer
+#### Layer Rules
 
 Some things in Wayland are not windows, but layers (e.g. app launchers, status
 bars, wallpapers). These are separately configured using
 `nix-hyprland.rules.layer`.
 
-##### Match (Layer)
+##### Match (Layer Rules)
 
-Layer rules can match on only one thing—`namespace`.
+Layer rules can match on only one thing—`namespace` (of type `str`).
 
-##### Effects (Layer)
+##### Effects (Layer Rules)
 
 Available effects can be seen on
 [the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#effects-1).
@@ -517,9 +514,39 @@ Unlike window rule effects, these are not split into `static` and `dynamic`. It
 does not say on the Hyprland wiki explicitly, but looking at the descriptions of
 the effects, I'm pretty sure all of them are `static`.
 
-#### Workspace
+#### Workspace Rules
 
 This is a todo.[^3]
+
+#### Unnamed Rules
+
+Unnamed rules are set using `nix-hyprland.rules.unnamed.type` (where `type` is
+`window`, `layer`, etc.), which is a list. Here's an example of two unnamed
+window rules:
+
+```nix
+nix-hyprland.rules.unnamed.window = [
+    # Unnamed window rule that fullscreens every Kitty window
+    {
+        match.initialClass = "kitty";
+        effects.static.fullscreen = true;
+    }
+    # Unnamed window rule that makes every Firefox window stay focused
+    {
+        match.initialClass = "firefox";
+        effects.dynamic.stay_focused = true;
+    }
+];
+```
+
+The syntax of the rules themselves is the same as mentioned in
+[Window Rules](#window-rules). Same for other types of rules.
+
+There are mainly two differences between using unnamed and named rules:
+
+1. You don't have to think of a name for the rule if it's unnamed.
+2. Unnamed rules are evaluated after. In other words, named rules have
+   precedence.
 
 ### Layouts
 
