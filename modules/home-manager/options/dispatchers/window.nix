@@ -243,7 +243,10 @@ in
 
     set_prop = mkDispatcher {
         options = {
-            prop = mkOption { type = types.str; }; # todo: ?
+            prop = mkOption {
+                type = types.str;
+                description = "I am not sure what type this is. If you find out, please open an issue. Until then, this is a todo.";
+            };
             value = mkOption { type = types.anything; };
             window = mkNullOption { type = localTypes.window; };
         };

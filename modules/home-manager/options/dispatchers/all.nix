@@ -8,7 +8,6 @@
     mkNullOption,
     mkNullSubmodule,
 }:
-# todo: add more files
 
 let
     inherit (lib) mkOption types;
@@ -190,10 +189,10 @@ in
     send_shortcut = mkDispatcher {
         options = {
             mods = mkOption {
-                type = types.str; # todo: ?
+                type = types.str;
             };
             key = mkOption {
-                type = types.str; # todo: ?
+                type = types.str;
             };
             window = mkNullOption { type = localTypes.window; };
         };
@@ -204,10 +203,10 @@ in
     send_key_state = mkDispatcher {
         options = {
             mods = mkOption {
-                type = types.str; # todo: ?
+                type = types.str;
             };
             key = mkOption {
-                type = types.str; # todo: ?
+                type = types.str;
             };
             state = mkOption {
                 type = types.enum [

@@ -32,8 +32,8 @@ in
     active = mkDispatcher {
         options = {
             index = mkOption {
-                type = types.str; # todo: ?
-                description = "I have no idea whether this is an integer, a string, or whatever. Please open an issue if you find out what this is.";
+                type = types.str;
+                description = "I have no idea whether this is an integer, a string, or whatever. Please open an issue if you find out what this is. Until then, this is a todo.";
             };
             window = mkNullOption { type = localTypes.window; };
         };
