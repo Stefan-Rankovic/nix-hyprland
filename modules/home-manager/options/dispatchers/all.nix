@@ -2,11 +2,11 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    exactlyOneNonNullSubmodule,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
 }:
 
 let
@@ -51,7 +51,7 @@ in
     };
 
     cursor = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = import ./cursor.nix {
                 inherit
                     lib
@@ -64,7 +64,7 @@ in
     };
 
     group = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = import ./group.nix {
                 inherit
                     argPresets
@@ -79,23 +79,23 @@ in
     };
 
     window = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = import ./window.nix {
                 inherit
                     argPresets
-                    exactlyOneNonNullSubmodule
                     lib
                     localTypes
                     mkDispatcher
                     mkNullOption
                     mkNullSubmodule
+                    oneNonNullSubmodule
                     ;
             };
         };
     };
 
     workspace = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = import ./workspace.nix {
                 inherit
                     lib
@@ -124,7 +124,7 @@ in
     };
 
     focus = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = {
                 direction = mkNullOption {
                     type = localTypes.direction;

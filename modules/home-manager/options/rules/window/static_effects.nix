@@ -2,17 +2,23 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    forceNonNullIn,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    nonNullSubmodule,
 }:
 
 let
     inherit (lib) mkOption types;
 
-    strWithoutSuffixType = suffix: types.addCheck types.str (v: !(lib.hasSuffix suffix v));
+    strWithoutSuffixType =
+        suffix:
+        types.str
+        // {
+            typeMerge = _: null;
+            check = v: types.str.check v && !(lib.hasSuffix suffix v);
+        };
 
     falseOption = mkOption {
         type = types.bool;
@@ -154,17 +160,15 @@ in
     };
 
     suppress_event = mkNullOption {
-        type = forceNonNullIn (
-            types.submodule {
-                options = {
-                    fullscreen = falseOption;
-                    maximize = falseOption;
-                    activate = falseOption;
-                    activatefocus = falseOption;
-                    fullscreenoutput = falseOption;
-                };
-            }
-        );
+        type = nonNullSubmodule {
+            options = {
+                fullscreen = falseOption;
+                maximize = falseOption;
+                activate = falseOption;
+                activatefocus = falseOption;
+                fullscreenoutput = falseOption;
+            };
+        };
         description = "Floats a window.";
     };
 

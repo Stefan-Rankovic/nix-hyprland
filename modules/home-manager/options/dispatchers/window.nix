@@ -3,12 +3,12 @@
 
 {
     argPresets,
-    exactlyOneNonNullSubmodule,
     lib,
     localTypes,
     mkDispatcher,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
 }:
 
 let
@@ -76,7 +76,7 @@ in
     };
 
     move = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = {
                 direction = mkNullOption {
                     type = types.either localTypes.direction (
@@ -168,7 +168,7 @@ in
     };
 
     swap = mkNullOption {
-        type = exactlyOneNonNullSubmodule {
+        type = oneNonNullSubmodule {
             options = {
                 direction = mkNullOption {
                     type = localTypes.direction;

@@ -3,12 +3,12 @@
 
 {
     config,
-    exactlyOneNonNullSubmodule,
     lib,
     localTypes,
     luaFunctionArguments,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
     ...
 }:
 
@@ -25,13 +25,13 @@ let
     binds = import ./binds {
         inherit
             config
-            exactlyOneNonNullSubmodule
             filterNullsRecursive
             lib
             localTypes
             luaFunctionArguments
             mkNullOption
             mkNullSubmodule
+            oneNonNullSubmodule
             ;
     };
     dispatchers = import ./dispatchers {

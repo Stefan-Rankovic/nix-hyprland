@@ -3,11 +3,11 @@
 
 {
     config,
-    exactlyOneNonNullSubmodule,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
     ...
 }:
 
@@ -18,11 +18,11 @@ let
 
     bindType = import ./bind_type.nix {
         inherit
-            exactlyOneNonNullSubmodule
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
+            oneNonNullSubmodule
             ;
     };
 in

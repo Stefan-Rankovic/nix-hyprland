@@ -2,9 +2,9 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    forceNonNullIn,
     lib,
     mkNullOption,
+    nonNullSubmodule,
 }:
 
 let
@@ -19,7 +19,7 @@ let
 
     # === Effects ===
     # Type
-    effectsType = forceNonNullIn types.submodule {
+    effectsType = nonNullSubmodule {
         options = import ./effects.nix { inherit lib mkNullOption; };
     };
     # Option

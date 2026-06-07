@@ -3,20 +3,20 @@
 
 {
     doubleElement,
-    forceNonNullIn,
     lib,
     mkNullOption,
+    nonNullSubmodule,
 }:
 
 {
-    color = import ./color.nix { inherit forceNonNullIn lib mkNullOption; };
+    color = import ./color.nix { inherit lib mkNullOption nonNullSubmodule; };
     content_type = import ./content_type.nix { inherit lib; };
-    css_gaps = import ./css_gaps.nix { inherit forceNonNullIn lib mkNullOption; };
+    css_gaps = import ./css_gaps.nix { inherit lib mkNullOption nonNullSubmodule; };
     direction = import ./direction.nix { inherit lib; };
     font_weight = import ./font_weight.nix { inherit lib; };
     fullscreen_action = import ./fullscreen_action.nix { inherit lib; };
     fullscreen_state = import ./fullscreen_state.nix { inherit lib; };
-    gradient = import ./gradient.nix { inherit forceNonNullIn lib mkNullOption; };
+    gradient = import ./gradient.nix { inherit lib mkNullOption nonNullSubmodule; };
     idle_inhibit_rules = import ./idle_inhibit_rules.nix { inherit lib; };
     layout = import ./layout.nix { inherit lib; };
     monitor = import ./monitor.nix { inherit lib; };

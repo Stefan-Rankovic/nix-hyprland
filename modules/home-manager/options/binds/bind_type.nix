@@ -2,11 +2,11 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    exactlyOneNonNullSubmodule,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
 }:
 
 let
@@ -27,11 +27,11 @@ let
     # Type
     dspType = import ../dispatchers/dispatcher_type.nix {
         inherit
-            exactlyOneNonNullSubmodule
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
+            oneNonNullSubmodule
             ;
     };
     # Option

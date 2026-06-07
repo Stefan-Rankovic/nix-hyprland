@@ -14,16 +14,6 @@ let
     cfg = config.nix-hyprland;
 
     mkNullOption =
-        # {
-        #     type,
-        #     description ? "",
-        # }:
-        # assert !(lib.hasPrefix "null or" type.name);
-        # lib.mkOption {
-        #     default = null;
-        #     type = types.nullOr type;
-        #     inherit description;
-        # };
         args:
         assert builtins.isAttrs args;
         assert !(builtins.hasAttr "default" args);
@@ -49,32 +39,51 @@ let
             inherit description;
         };
 
-    forceNonNullIn =
-        type: types.addCheck type (attrs: builtins.any (v: v != null) (builtins.attrValues attrs));
-
-    exactlyOneNonNullSubmodule =
+    nonNullSubmodule =
         module:
         types.submodule (
             { config, ... }:
             {
                 inherit (module) options;
-                config._module.check =
-                    builtins.length (lib.filter (v: v != null) (builtins.attrValues config)) == 1;
-                # config._module.check = [
-                #     (
-                #         let
-                #             nonNullCount = builtins.length (lib.filter (v: v != null) (builtins.attrValues config));
-                #         in
-                #         if nonNullCount == 1 then
-                #             null
-                #         else
-                #             "Exactly one field must be non-null, but got ${toString nonNullCount}"
-                #     )
-                # ];
+                config.assertions = [
+                    {
+                        assertion = builtins.any (option: config.${option} != null) (builtins.attrNames module.options);
+                        message = "At least one option in this submodule must be set (got 0).";
+                    }
+                ];
             }
         );
 
-    doubleElement = elementType: types.addCheck (types.listOf elementType) (v: builtins.length v == 2);
+    oneNonNullSubmodule =
+        module:
+        types.submodule (
+            { config, ... }:
+            let
+                nonNullNumber = builtins.length (
+                    lib.filter (option: config.${option} != null) (builtins.attrNames module.options)
+                );
+            in
+            {
+                inherit (module) options;
+                config.assertions = [
+                    {
+                        assertion = nonNullNumber == 1;
+                        message = "Exactly one option in this submodule must be set (got ${nonNullNumber}).";
+                    }
+                ];
+            }
+        );
+
+    doubleElement =
+        elementType:
+        let
+            type = types.listOf elementType;
+        in
+        type
+        // {
+            typeMerge = _: null;
+            check = v: type.check v && builtins.length v == 2;
+        };
 
     luaFunctionArguments =
         list: builtins.concatStringsSep ", " (map (value: lib.generators.toLua { } value) list);
@@ -82,23 +91,23 @@ let
     localTypes = import ./types {
         inherit
             doubleElement
-            forceNonNullIn
             lib
             mkNullOption
+            nonNullSubmodule
             ;
     };
 in
 {
     _module.args = {
         inherit
-            doubleElement
-            exactlyOneNonNullSubmodule
             checkHyprlandVersion
-            forceNonNullIn
+            doubleElement
             localTypes
             luaFunctionArguments
             mkNullOption
             mkNullSubmodule
+            nonNullSubmodule
+            oneNonNullSubmodule
             ;
     };
 

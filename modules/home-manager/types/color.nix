@@ -2,9 +2,9 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    forceNonNullIn,
     lib,
     mkNullOption,
+    nonNullSubmodule,
 }:
 
 let
@@ -33,18 +33,16 @@ let
         };
     };
 in
-forceNonNullIn (
-    types.submodule {
-        options = {
-            rgb = mkNullOption {
-                type = colorTypes.rgb;
-            };
-            rgba = mkNullOption {
-                type = colorTypes.rgba;
-            };
-            raw = mkNullOption {
-                type = types.str;
-            };
+nonNullSubmodule {
+    options = {
+        rgb = mkNullOption {
+            type = colorTypes.rgb;
         };
-    }
-)
+        rgba = mkNullOption {
+            type = colorTypes.rgba;
+        };
+        raw = mkNullOption {
+            type = types.str;
+        };
+    };
+}

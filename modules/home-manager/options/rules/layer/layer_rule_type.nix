@@ -2,10 +2,10 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    forceNonNullIn,
     lib,
     localTypes,
     mkNullOption,
+    nonNullSubmodule,
 }:
 
 let
@@ -20,11 +20,9 @@ let
 
     # === Match ===
     # Type
-    matchType = forceNonNullIn (
-        types.submodule {
-            options = import ./match_options.nix { inherit mkNullOption localTypes; };
-        }
-    );
+    matchType = nonNullSubmodule {
+        options = import ./match_options.nix { inherit localTypes mkNullOption; };
+    };
     # Option
     matchOption = mkOption {
         type = matchType;

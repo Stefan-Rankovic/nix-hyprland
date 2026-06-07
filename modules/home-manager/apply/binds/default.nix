@@ -3,13 +3,13 @@
 
 {
     config,
-    exactlyOneNonNullSubmodule,
     filterNullsRecursive,
     lib,
     localTypes,
     luaFunctionArguments,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
 }:
 
 let
@@ -17,11 +17,11 @@ let
 
     bindType = import ../../options/binds/bind_type.nix {
         inherit
-            exactlyOneNonNullSubmodule
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
+            oneNonNullSubmodule
             ;
     };
 

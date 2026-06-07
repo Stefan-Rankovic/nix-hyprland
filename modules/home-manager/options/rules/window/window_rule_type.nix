@@ -3,11 +3,11 @@
 
 {
     doubleElement,
-    forceNonNullIn,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    nonNullSubmodule,
 }:
 
 let
@@ -22,11 +22,9 @@ let
 
     # === Match ===
     # Type
-    matchType = forceNonNullIn (
-        types.submodule {
-            options = import ./match_options.nix { inherit mkNullOption lib localTypes; };
-        }
-    );
+    matchType = nonNullSubmodule {
+        options = import ./match_options.nix { inherit mkNullOption lib localTypes; };
+    };
     # Option
     matchOption = mkOption {
         type = matchType;
@@ -39,11 +37,11 @@ let
     staticEffectsType = types.submodule {
         options = import ./static_effects.nix {
             inherit
-                forceNonNullIn
                 lib
                 localTypes
                 mkNullOption
                 mkNullSubmodule
+                nonNullSubmodule
                 ;
         };
     };

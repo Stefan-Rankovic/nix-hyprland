@@ -2,21 +2,21 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    exactlyOneNonNullSubmodule,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    oneNonNullSubmodule,
 }:
 
-exactlyOneNonNullSubmodule {
+oneNonNullSubmodule {
     options = import ./all.nix {
         inherit
-            exactlyOneNonNullSubmodule
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
+            oneNonNullSubmodule
             ;
     };
 }

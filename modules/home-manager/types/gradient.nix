@@ -2,20 +2,20 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    forceNonNullIn,
     lib,
     mkNullOption,
+    nonNullSubmodule,
 }:
 
 let
     inherit (lib) mkOption types;
 
-    color = import ./color.nix { inherit forceNonNullIn lib mkNullOption; };
+    color = import ./color.nix { inherit lib mkNullOption nonNullSubmodule; };
 in
 types.submodule {
     options = {
         colors = mkOption {
-            type = types.addCheck (types.listOf color) (v: builtins.length v >= 1);
+            type = types.nonEmptyListOf color;
             description = "List of colors in the gradient.";
         };
         angle = mkNullOption { type = types.ints.unsigned; };

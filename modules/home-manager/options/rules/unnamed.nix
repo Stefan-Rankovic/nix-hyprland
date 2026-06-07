@@ -3,11 +3,11 @@
 
 {
     doubleElement,
-    forceNonNullIn,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    nonNullSubmodule,
     ...
 }:
 
@@ -16,21 +16,21 @@ let
 
     layerRuleType = import ./layer/layer_rule_type.nix {
         inherit
-            forceNonNullIn
             lib
             localTypes
             mkNullOption
+            nonNullSubmodule
             ;
     };
 
     windowRuleType = import ./window/window_rule_type.nix {
         inherit
             doubleElement
-            forceNonNullIn
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
+            nonNullSubmodule
             ;
     };
 in

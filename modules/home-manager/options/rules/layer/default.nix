@@ -2,10 +2,10 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    forceNonNullIn,
     lib,
     localTypes,
     mkNullOption,
+    nonNullSubmodule,
     ...
 }:
 
@@ -14,10 +14,10 @@ let
 
     layerRuleType = import ./layer_rule_type.nix {
         inherit
-            forceNonNullIn
             lib
             localTypes
             mkNullOption
+            nonNullSubmodule
             ;
     };
 in

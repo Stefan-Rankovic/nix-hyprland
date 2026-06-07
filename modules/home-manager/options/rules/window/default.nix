@@ -3,11 +3,11 @@
 
 {
     doubleElement,
-    forceNonNullIn,
     lib,
     localTypes,
     mkNullOption,
     mkNullSubmodule,
+    nonNullSubmodule,
     ...
 }:
 
@@ -17,11 +17,11 @@ let
     windowRuleType = import ./window_rule_type.nix {
         inherit
             doubleElement
-            forceNonNullIn
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
+            nonNullSubmodule
             ;
     };
 in
