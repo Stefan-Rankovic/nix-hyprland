@@ -32,7 +32,7 @@ in
     };
 
     border_size = mkNullOption {
-        type = localTypes.ints.unsigned;
+        type = types.ints.unsigned;
         description = "Set the border size around windows (equivalent to [General->gaps_out](https://wiki.hypr.land/Configuring/Basics/Variables#general)).";
     };
 
