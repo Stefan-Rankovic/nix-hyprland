@@ -382,6 +382,7 @@ These are also, unlike in Home Manager, defined with attribute sets. To define a
 window rule that makes all Kitty windows float, you can do:
 
 ```nix
+# You can replace "float-kitty` with anything you want. It's a name for you, not Hyprland or this flake.
 nix-hyprland.rules.window."float-kitty" = {
     match.initialClass = "kitty";
     effects.static.float = true;
