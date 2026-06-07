@@ -634,5 +634,6 @@ This project is licensed under GPL-3.0-or-later and is REUSE-compliant.
     they were a lower priority on my implementation list. But they aren't
     forever unimplemented, but a todo. What you can do about this is fork the
     repository and implement it on your own, put things inside
-    `extraLuaConfigPre` or `extraLuaConfigPost`, or wait for me to implement
-    them (I wouldn't count on the last option).
+    `extraLuaConfigPre` or `extraLuaConfigPost`, use
+    [Home Manager](#compatibility-with-home-manager) instead, or wait for me to
+    implement them (I wouldn't count on the last option).
