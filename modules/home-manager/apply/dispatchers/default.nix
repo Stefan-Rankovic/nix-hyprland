@@ -14,7 +14,7 @@ in
 lib.concatStringsSep "\n" (
     map (
         dispatcher:
-        import ./parse_dispatcher.nix.nix {
+        import ./parse_dispatcher.nix {
             inherit
                 dispatcher
                 filterNullsRecursive
