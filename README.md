@@ -435,7 +435,7 @@ All three of those options are required.[^3]
     chose the latter because Hyprland's API could change at any moment. Another
     reason is consistency. Every other thing is also `null` by default (see the
     notes in [Configuration](#configuration)) which is because I didn't want to
-    hard-code one.
+    hard-code anything.
 
 Translating `"0.5 override 1.0 0.1"` would look like:
 
@@ -516,13 +516,36 @@ the effects, I'm pretty sure all of them are `static`.
 
 #### Workspace Rules
 
-This is a todo.[^4]
+Workspace rules are all unnamed. But the type (of
+`nix-hyprland.rules.workspace`) is still an attribute set.
+
+##### Match (Workspace Rules)
+
+Workspace rules can only match on one thing—the workspace identifier (available
+values for that can be seen on
+[Workspace](https://wiki.hypr.land/Configuring/Basics/Dispatchers/#workspace)).
+I decided to make that the attribute set key. An example workspace rule could
+look like:
+
+```nix
+nix-hyprland.rules.workspace."3".effects = { ... };
+```
+
+Which would apply the effects listed to workspace 3.
+
+##### Effects (Workspace Rules)
+
+Available effects can be seen on
+[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/#rules).
+
+Like [Layer Rules](#layer-rules), these are not split into `static` and
+`dynamic`.
 
 #### Unnamed Rules
 
 Unnamed rules are set using `nix-hyprland.rules.unnamed.type` (where `type` is
-`window`, `layer`, etc.), which is a list. Here's an example of two unnamed
-window rules:
+`window` or `layer`), which is a list. Here's an example of two unnamed window
+rules:
 
 ```nix
 nix-hyprland.rules.unnamed.window = [

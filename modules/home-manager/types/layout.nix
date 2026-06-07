@@ -1,14 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
-_:
+{ lib }:
 
-{
-    imports = [
-        ./layer
-        ./window
-        ./workspace
-
-        ./unnamed.nix
-    ];
-}
+lib.types.enum [
+    "dwindle"
+    "master"
+    "scrolling"
+    "monocle"
+]

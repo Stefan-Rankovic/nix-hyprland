@@ -3,13 +3,13 @@
 
 {
     filterNullsRecursive,
-    rule,
-    name,
     lib,
+    name,
+    rule,
 }:
 assert builtins.isFunction filterNullsRecursive;
-assert builtins.isAttrs rule;
 assert builtins.isString name || name == null;
+assert builtins.isAttrs rule;
 
 let
     merged = lib.foldl' lib.attrsets.unionOfDisjoint { } [

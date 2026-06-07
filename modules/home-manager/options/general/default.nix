@@ -68,12 +68,7 @@ in
     };
 
     layout = mkNullOption {
-        type = types.enum [
-            "dwindle"
-            "master"
-            "scrolling"
-            "monocle"
-        ];
+        type = localTypes.layout;
         description = "Which layout to use.";
     };
 

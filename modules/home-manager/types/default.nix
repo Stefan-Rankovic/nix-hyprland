@@ -18,6 +18,7 @@
     fullscreen_state = import ./fullscreen_state.nix { inherit lib; };
     gradient = import ./gradient.nix { inherit forceNonNullIn lib mkNullOption; };
     idle_inhibit_rules = import ./idle_inhibit_rules.nix { inherit lib; };
+    layout = import ./layout.nix { inherit lib; };
     monitor = import ./monitor.nix { inherit lib; };
     opacity = import ./opacity.nix { inherit lib; };
     regex = import ./regex.nix { inherit lib; };
