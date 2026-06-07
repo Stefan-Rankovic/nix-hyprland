@@ -16,15 +16,15 @@ Manager's syntax is (in my opinion) pretty bad.
 ## Requirements
 
 - [NixOS](https://nixos.org/)[^1]
-- [Home Manager](https://github.com/nix-community/home-manager)[^2]
+- [Home Manager](https://github.com/nix-community/home-manager) - Required for
+  actual configuration. Without Home Manager, this becomes a bloated tool to
+  install Hyprland with [UWSM]. With it, you can do actual Hyprland
+  configuration. Technically, though, it is possible to use this flake without
+  using Home Manager.
 
 [^1]: I'm not really sure whether it is really required or not, but I use NixOS
     and made this for myself. If you can get it working on another Linux
     distribution, amazing! But I can't guarantee anything.
-
-[^2]: Not really a hard requirement. The installation will complete
-    successfully. But 99% of the features this flake provides are only
-    accessible with it.
 
 ## Installation
 
@@ -55,17 +55,16 @@ module configuration, and set some options inside it:
 ```nix
 nix-hyprland = {
     enable = true;
-    uwsm.runner = pkgs.runapp; # Faster than `uwsm app --`
+    uwsm.runner = pkgs.runapp; # Faster alternative to `uwsm app --`
 };
 ```
 
-#### UWSM
+#### Unified Wayland Session Manager (UWSM)
 
-> [!WARNING]
-> Enabling nix-hyprland automatically sets up
-> [UWSM](https://github.com/Vladimir-csp/uwsm).
->
-> If you don't like that, sadly nix-hyprland isn't for you.
+Enabling nix-hyprland automatically sets up
+[UWSM](https://github.com/Vladimir-csp/uwsm).
+
+If you don't like that, sadly nix-hyprland isn't for you.
 
 ### Home Manager
 
