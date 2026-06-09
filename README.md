@@ -94,6 +94,25 @@ replacement. Some articles (e.g.
 do not have anything to add here, as all the content is on the Hyprland wiki.
 Things documented here seek to serve a syntax guide, not a logic one.
 
+> [!WARNING]
+> There's a [bug](https://github.com/NixOS/nixpkgs/issues/396021) in
+> [nixpkgs](https://github.com/NixOS/nixpkgs) that causes `lib.types.addCheck`
+> (a `check` value as well) to be ignored when the value (e.g. attribute set,
+> list) is merged. It causes the type system not to properly enforce the given
+> check.
+>
+> Until that issue is resolved, enforcing only one non-`null` value inside a
+> given attribute set (at the type level) is incredibly hard (for me) to do.
+> Which is why I had to improvise by moving the check to the apply phase. That's
+> a shallow check though: it only checks if you set two dispatchers of different
+> types (e.g. it won't catch you setting `window.kill` and `window.signal`).
+>
+> _"What does this have to do with me though? What happens if I ignore this and
+> define multiple dispatchers per bind?"_ You can do that, but the program will
+> silently choose only one and ignore the other. That's what I think will
+> happen, though: I'm not 100% sure. And for other things that also require only
+> one non-`null` value, a check doesn't currently exist.
+
 ### Compatibility with Home Manager
 
 There is no extra setup needed. Due to Nix merging multiline strings, you can
@@ -313,7 +332,9 @@ nix-hyprland.binds.list."...".dsp = {
 };
 ```
 
-Because only one dispatcher is valid per bind.
+Because only one dispatcher is valid per bind (see the warning in
+[Configuration](#configuration) about multiple `null` values in one attribute
+set). <!-- todo: remove this when the warning is removed -->
 
 Instead, what you can do, is define a bind to be a list of attribute sets:
 

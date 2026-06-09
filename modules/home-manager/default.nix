@@ -39,40 +39,9 @@ let
             inherit description;
         };
 
-    nonNullSubmodule =
-        module:
-        types.submodule (
-            { config, ... }:
-            {
-                inherit (module) options;
-                config.assertions = [
-                    {
-                        assertion = builtins.any (option: config.${option} != null) (builtins.attrNames module.options);
-                        message = "At least one option in this submodule must be set (got 0).";
-                    }
-                ];
-            }
-        );
-
-    oneNonNullSubmodule =
-        module:
-        types.submodule (
-            { config, ... }:
-            let
-                nonNullNumber = builtins.length (
-                    lib.filter (option: config.${option} != null) (builtins.attrNames module.options)
-                );
-            in
-            {
-                inherit (module) options;
-                config.assertions = [
-                    {
-                        assertion = nonNullNumber == 1;
-                        message = "Exactly one option in this submodule must be set (got ${nonNullNumber}).";
-                    }
-                ];
-            }
-        );
+    # todo: when https://github.com/NixOS/nixpkgs/issues/396021 gets fixed, update these to actually do something
+    nonNullSubmodule = types.submodule;
+    oneNonNullSubmodule = types.submodule;
 
     doubleElement =
         elementType:
