@@ -86,13 +86,10 @@ Seriously, it produces a completely empty Lua file by default!
 > Because of that, setting them to `null` changes nothing, and will **not**
 > cause the resulting Lua file to contain a value of `nil` in that place.
 
-This documentation seeks to follow a similar format as
-[the Hyprland wiki](https://wiki.hypr.land/), but it does not serve as a
-replacement. Some articles (e.g.
-[XWayland](https://wiki.hypr.land/Configuring/Advanced-and-Cool/XWayland/) or
-[Performance](https://wiki.hypr.land/Configuring/Advanced-and-Cool/Performance/))
-do not have anything to add here, as all the content is on the Hyprland wiki.
-Things documented here seek to serve a syntax guide, not a logic one.
+Before reading a section here, it is recommended to first read the corresponding
+Hyprland wiki page. Here, you will not see available options or recommendations,
+but a guide on how to translate the syntax you learn on the Hyprland wiki to a
+Nix configuration compliant with this flake.
 
 > [!WARNING]
 > There's a [bug](https://github.com/NixOS/nixpkgs/issues/396021) in
@@ -178,9 +175,6 @@ nix-hyprland = {
 };
 ```
 
-The list of available options can be seen on
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Variables/#sections).
-
 ### Monitors
 
 The monitors are defined as a list of attribute sets.
@@ -198,9 +192,6 @@ nix-hyprland.monitors = [
     }
 ];
 ```
-
-For more available options, see
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Monitors/).
 
 ### Binds
 
@@ -347,14 +338,12 @@ nix-hyprland.binds.list."..." = [
 
 ### Dispatchers
 
-In the [Binds](#binds) section, you could see there's a `dsp` field for every
-bind. That's short for "dispatcher".
+Examples on how to use one in a bind can be seen in the [Binds](#binds) section.
+This section will focus on using them in a `dispatch`, or general syntax of the
+dispatchers.
 
-There's a lot of them, and the full list (and their documentation) can be found
-on [the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Dispatchers/).
-
-You can use them in binds as actions (as shown in [Binds](#binds)), or you can
-directly run them on Hyprland startup. The latter would look like:
+The latter (using them in a `dispatch` call) would run the action at Hyprland
+startup. An example would be:
 
 ```nix
 nix-hyprland.dispatchers = [
@@ -363,11 +352,16 @@ nix-hyprland.dispatchers = [
 ];
 ```
 
-There are some dispatchers that take no arguments (e.g. `exit` or `window.kill`
-(the latter does take one argument but it's optional)). For example, to use one
-in a bind, you would do `nix-hyprland.binds.list."...".dsp.exit = {};` (this is
-an example to show syntax, not functionality; do not use `exit`) or
-`nix-hyprland.binds.list."...".dsp.window.kill = {};`.
+There are some dispatchers that can take no arguments (e.g. `exit` or
+`window.kill`). They are used by setting their value to an empty attribute set.
+For example:
+
+```nix
+nix-hyprland.dispatchers = [
+    { exit = {}; } # Reminder: `hyprshutdown` is better
+    { window.kill = {}; }
+];
+```
 
 #### Raw Lua
 
@@ -391,44 +385,50 @@ nix-hyprland.binds."...".dsp.raw_lua = ''
 
 ### Rules
 
-Rules are split into three groups—[window](#window-rules),
-[layer](#layer-rules), and [workspace](#workspace-rules) rules.
-
 Disabling rules is the same as disabling binds. Instead of commenting them out,
-just add `enable = false;`.
+you could add `enable = false;`.
 
-#### Window Rules
+#### Basic Syntax
 
-These are also, unlike in Home Manager, defined with attribute sets. To define a
-window rule that makes all Kitty windows float, you can do:
+They are all defined with attribute sets. For window and layer rules, the name
+of an element represents the name of the rule. For workspace rules (because they
+are all unnamed), the name of an element represents what workspace(s) to match
+to.
 
 ```nix
-# You can replace "float-kitty` with anything you want. It's a name for you, not Hyprland or this flake.
-nix-hyprland.rules.window."float-kitty" = {
-    match.initialClass = "kitty";
-    effects.static.float = true;
+nix-hyprland.rules = {
+    window."float-kitty" = {
+        match.initialClass = "kitty"; # Matching on multiple things is supported
+        effects.static.float = true; # Multiple effects are supported
+    };
+    workspace."3".effects = { ... }; # No `match` because that's the "3"
 };
 ```
 
-##### Match (Window Rules)
+#### Naming
 
-This part defines what the window rule applies to. There are a lot of options
-here, all of which available on
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#props).
+To define unnamed window or layer rules, use a list:
 
-##### Effects (Window Rules)
+```nix
+nix-hyprland.rules.unnamed.window = {
+    {
+        match.initialClass = "kitty";
+        effects.static.fullscreen = true;
+    }
+    {
+        match.initialClass = "firefox";
+        effects.dynamic.stay_focused = true;
+    }
+};
+```
 
-This part defines what the window rule actually does. Available options can be
-seen on
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#effects).
+#### Effects
 
-> [!WARNING]
-> `effects.stay_focused` does not exist. `effects.dynamic.stay_focused` does.
->
-> To set an effect, first check on the Hyprland wiki whether it's a static or
-> dynamic effect and define the window rule accordingly.
+For **window rules**, in order to define an effect, you must know whether it is
+static or dynamic. As seen above, to access an effect,
+`effects.static.effectName` is used, not `effects.effectName`.
 
-###### Opacity
+##### Opacity
 
 In Hyprland, the value of `opacity` is just a string. But here it is an
 attribute set to be declaratively set. In Hyprland, what would be
@@ -464,127 +464,6 @@ Translating `"0.5 override 1.0 0.1"` would look like:
     fullscreen.value = 0.1;
 }
 ```
-
-`override` exists because `active.value = 0.5` does not mean that the window's
-opacity will be `0.5`, but that the previously set opacity will be multiplied by
-`0.5`. So two separate window rules setting the opacity to `0.5` will make the
-opacity of a window that fulfills both `0.25`. For example, the opacity of an
-active floating `Kitty` window will be `0.15` using this configuration (because
-`0.3 * 0.5 = 0.15`):
-
-```nix
-nix-hyprland.rules.window = {
-    "kitty" = {
-        match.initialClass = "kitty";
-        effects.dynamic.opacity.active.value = 0.5;
-    };
-    "floating" = {
-        match.float = true;
-        effects.dynamic.opacity.active.value = 0.3;
-    };
-};
-```
-
-Because of that, an opacity can also be set to more than `1.0`. For example, the
-opacity of an active floating `Kitty` window will be `0.6` using this
-configuration:
-
-```nix
-nix-hyprland.rules.window = {
-    "kitty" = {
-        match.initialClass = "kitty";
-        effects.dynamic.opacity.active.value = 2.0;
-    };
-    "floating" = {
-        match.float = true;
-        effects.dynamic.opacity.active.value = 0.3;
-    };
-};
-```
-
-> [!CAUTION]
-> Be careful when doing setting an opacity over `1.0`, since (using the above
-> example) an active non-floating `Kitty` window will have an opacity of `2.0`.
-> Any opacity over `1.0` causes graphical glitches.
-
-This is all also documented at the bottom of
-[Notes](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#notes).
-
-#### Layer Rules
-
-Some things in Wayland are not windows, but layers (e.g. app launchers, status
-bars, wallpapers). These are separately configured using
-`nix-hyprland.rules.layer`.
-
-##### Match (Layer Rules)
-
-Layer rules can match on only one thing—`namespace` (of type `str`).
-
-##### Effects (Layer Rules)
-
-Available effects can be seen on
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Window-Rules/#effects-1).
-
-Unlike window rule effects, these are not split into `static` and `dynamic`. It
-does not say on the Hyprland wiki explicitly, but looking at the descriptions of
-the effects, I'm pretty sure all of them are `static`.
-
-#### Workspace Rules
-
-Workspace rules are all unnamed. But the type (of
-`nix-hyprland.rules.workspace`) is still an attribute set.
-
-##### Match (Workspace Rules)
-
-Workspace rules can only match on one thing—the workspace identifier (available
-values for that can be seen on
-[Workspace](https://wiki.hypr.land/Configuring/Basics/Dispatchers/#workspace)).
-I decided to make that the attribute set key. An example workspace rule could
-look like:
-
-```nix
-nix-hyprland.rules.workspace."3".effects = { ... };
-```
-
-Which would apply the effects listed to workspace 3.
-
-##### Effects (Workspace Rules)
-
-Available effects can be seen on
-[the Hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/#rules).
-
-Like [Layer Rules](#layer-rules), these are not split into `static` and
-`dynamic`.
-
-#### Unnamed Rules
-
-Unnamed rules are set using `nix-hyprland.rules.unnamed.type` (where `type` is
-`window` or `layer`), which is a list. Here's an example of two unnamed window
-rules:
-
-```nix
-nix-hyprland.rules.unnamed.window = [
-    # Unnamed window rule that fullscreens every Kitty window
-    {
-        match.initialClass = "kitty";
-        effects.static.fullscreen = true;
-    }
-    # Unnamed window rule that makes every Firefox window stay focused
-    {
-        match.initialClass = "firefox";
-        effects.dynamic.stay_focused = true;
-    }
-];
-```
-
-The syntax of the rules themselves is the same as mentioned in
-[Window Rules](#window-rules). Same for other types of rules.
-
-There are mainly two differences between using unnamed and named rules:
-
-1. You don't have to think of a name for the rule if it's unnamed.
-2. Unnamed rules are evaluated after. In other words, named rules have
-   precedence.
 
 ### Layouts
 
