@@ -12,19 +12,23 @@ let
     cfg = config.nix-hyprland;
 in
 {
-    _module.args = { inherit checkHyprlandVersion; };
     imports = [
         ./options.nix
     ];
 
-    programs.hyprland = {
-        inherit (cfg)
-            enable
-            package
-            xwayland
-            ;
-        withUWSM = true;
-    };
+    config = lib.mkMerge [
+        { _module.args = { inherit checkHyprlandVersion; }; }
+        (lib.mkIf cfg.enable {
+            programs.hyprland = {
+                inherit (cfg)
+                    enable
+                    package
+                    portalPackage
+                    ;
+                withUWSM = true;
+            };
 
-    environment.systemPackages = lib.optional (cfg.enable && cfg.uwsm.runner != null) cfg.uwsm.runner;
+            environment.systemPackages = lib.optional (cfg.uwsm.runner != null) cfg.uwsm.runner;
+        })
+    ];
 }
