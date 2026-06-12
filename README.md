@@ -18,9 +18,9 @@ Manager's syntax is (in my opinion) pretty bad.
 - [NixOS](https://nixos.org/)[^1]
 - [Home Manager](https://github.com/nix-community/home-manager) - Required for
   actual configuration. Without Home Manager, this becomes a bloated tool to
-  install Hyprland with [UWSM]. With it, you can do actual Hyprland
-  configuration. Technically, though, it is possible to use this flake without
-  using Home Manager.
+  install Hyprland with [UWSM](#unified-wayland-session-manager-uwsm) With it,
+  you can do actual Hyprland configuration. Technically, though, it is possible
+  to use this flake without using Home Manager.
 
 [^1]: I'm not really sure whether it is really required or not, but I use NixOS
     and made this for myself. If you can get it working on another Linux
