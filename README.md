@@ -47,41 +47,62 @@ Like every other flake, it must be added to the `inputs` section of your
 }
 ```
 
-### NixOS Module
-
-Import `inputs.nix-hyprland.nixosModules.default` somewhere inside your NixOS
-module configuration, and set some options inside it:
-
-```nix
-nix-hyprland = {
-    enable = true;
-    uwsm.runner = pkgs.runapp; # Faster alternative to `uwsm app --`
-};
-```
-
-#### Unified Wayland Session Manager (UWSM)
+### Unified Wayland Session Manager (UWSM)
 
 Enabling nix-hyprland automatically sets up
 [UWSM](https://github.com/Vladimir-csp/uwsm).
 
 If you don't like that, sadly nix-hyprland isn't for you.
 
+> [!CAUTION]
+> In Home Manager, `wayland.windowManager.hyprland.systemd.enable` will be set
+> to `false` because of this. Do not override that! It's intentional because
+> UWSM conflicts with that option.
+
+### NixOS Module
+
+Import `inputs.nix-hyprland.nixosModules.default` somewhere inside your NixOS
+module configuration, and set `nix-hyprland.enable` to `true`.
+
 ### Home Manager
 
 If you are also using Home Manager (which is recommended), import
 `inputs.nix-hyprland.homeManagerModules.default` somewhere inside your Home
-Manager configuration.
+Manager configuration and set `nix-hyprland.enable` to `true`.
+
+## Options
+
+The boring stuff. Options in here don't go to the resulting Lua file.
+
+### NixOS Options
+
+`package` and `portalPackage` represent the Hyprland and
+xdg-desktop-portal-hyprland packages respectively.
+
+`uwsm.runner` (a package) is a runner (for GUI applications) that integrates
+with UWSM for all users.
+
+### Home Manager Options
+
+`package` represents the Hyprland package to use. It should not be set if the
+NixOS module is also being used, which is why it's `null` by default.
+
+`uwsm.runner` (a package) is a runner (for GUI applications) that integrates
+with UWSM for one user only. Can be used with the NixOS module `uwsm.runner`,
+you will just have both runners in your `PATH`.
 
 ## Configuration
 
 > [!NOTE]
-> The following options are defined in Home Manager, not the NixOS module.
+> This section is for Home Manager users only.
+
+Actually fun stuff. Options here go to the resulting Lua file.
 
 Nix-hyprland lets _you_ do all the configuring, with no defaults at all.
 Seriously, it produces a completely empty Lua file by default!
 
 > [!WARNING]
-> To make that possible, all options in nix-hyprland are `null` by default.
+> To make that possible, all options are `null` by default.
 >
 > Because of that, setting them to `null` changes nothing, and will **not**
 > cause the resulting Lua file to contain a value of `nil` in that place.
@@ -108,9 +129,9 @@ Nix configuration compliant with this flake.
 > define multiple dispatchers per bind?"_ You can do that, but the program will
 > silently choose only one and ignore the other. That's what I think will
 > happen, though: I'm not 100% sure. And for other things that also require only
-> one non-`null` value, a check doesn't currently exist.
+> one non-`null` value, a check doesn't exist.
 
-### Compatibility with Home Manager
+### Native Home Manager Configuration
 
 There is no extra setup needed. Due to Nix merging multiline strings, you can
 use both Home Manager options (`wayland.windowManager.hyprland.*`) and
@@ -162,7 +183,7 @@ own Lua code to the resulting Lua file.
 If you choose to use those two options, you can still, of course, use the rest
 of the options.
 
-### Options
+### Variables
 
 Options like `general.border_size` or `input.touchdevice.enabled` (or similar)
 can be configured like:
@@ -327,7 +348,7 @@ Because only one dispatcher is valid per bind (see the warning in
 [Configuration](#configuration) about multiple `null` values in one attribute
 set). <!-- todo: remove this when the warning is removed -->
 
-Instead, what you can do, is define a bind to be a list of attribute sets:
+Instead, what you should do is define a bind to be a list of attribute sets:
 
 ```nix
 nix-hyprland.binds.list."..." = [
@@ -484,11 +505,12 @@ This is a todo.[^4]
 
 They do not exist inside this project. I simply see no need in implementing
 them, as I don't see where they would be used. They can only be used to push a
-one-time notification, as `if` blocks don't exist either (I'm not sure if
+one-time notification, because `if` blocks don't exist either (I'm not sure if
 they're even supported in Hyprland itself). And there are various better methods
-to do that. The only use case I see for them is as a keybind effect, but that's
-taken care of by the [`raw_lua` dispatcher](#raw-lua). In any case you're better
-using a notification manager (even said on the
+to do that (notification managers). The only use case I see for them is as a
+keybind effect, but that's taken care of by the
+[`raw_lua` dispatcher](#raw-lua). In any case you're better using a notification
+manager (even said on the
 [wiki](https://wiki.hypr.land/Configuring/Advanced-and-Cool/Notifications/)
 note).
 
@@ -524,5 +546,5 @@ This project is licensed under GPL-3.0-or-later and is REUSE-compliant.
     forever unimplemented, but a todo. What you can do about this is fork the
     repository and implement it on your own, put things inside
     `extraLuaConfigPre` or `extraLuaConfigPost`, use
-    [Home Manager](#compatibility-with-home-manager) instead, or wait for me to
-    implement them (I wouldn't count on the last option).
+    [Home Manager Natively](#native-home-manager-configuration) instead, or wait
+    for me to implement them (I wouldn't count on the last option).
