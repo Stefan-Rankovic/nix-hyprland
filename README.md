@@ -436,21 +436,13 @@ attribute set to be declaratively set. In Hyprland, what would be
 
 ```nix
 {
-    active.value = 1.0;
+    active.value = 1.0; # You can leave this out, since 1.0 is the default
     inactive.value = 0.5;
     fullscreen.value = 0.9;
 }
 ```
 
-All three of those options are required.[^3]
-
-[^3]: That is because Hyprland doesn't directly map to an attribute set. Setting
-    just one value defaults it to all three, for example. I had two
-    options—hard-code a default value for all three or have you handle it. I
-    chose the latter because Hyprland's API could change at any moment. Another
-    reason is consistency. Every other thing is also `null` by default (see the
-    notes in [Configuration](#configuration)) which is because I didn't want to
-    hard-code anything.
+If you leave out an option, it defaults to `1.0`.
 
 Translating `"0.5 override 1.0 0.1"` would look like:
 
@@ -460,10 +452,13 @@ Translating `"0.5 override 1.0 0.1"` would look like:
         value = 0.5;
         override = true;
     };
-    inactive.value = 1.0;
     fullscreen.value = 0.1;
 }
 ```
+
+There's another option. If you don't like attribute sets, you can set the
+opacity to something like `0.5` (as a float, not string). That will pass it
+directly to Hyprland as a single value.
 
 ### Layouts
 
@@ -512,7 +507,7 @@ on this.
 
 ### Plugins
 
-This is a todo.[^4] For now, you can use
+This is a todo[^4]. For now, you can use
 `wayland.windowManager.hyprland.plugins` (in Home Manager).
 
 ## License

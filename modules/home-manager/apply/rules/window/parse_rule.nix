@@ -37,6 +37,7 @@ let
             fullscreen = opacitySingle opacity.fullscreen;
         in
         "${active} ${inactive} ${fullscreen}";
+    opacityWrapper = opacity: if builtins.isAttrs opacity then opacityAll opacity else toString opacity;
 
     handleGroup =
         group:
@@ -63,7 +64,7 @@ let
     merged =
         baseMerged
         // (lib.optionalAttrs (builtins.hasAttr "opacity" baseMerged) {
-            opacity = opacityAll rule.effects.dynamic.opacity;
+            opacity = opacityWrapper rule.effects.dynamic.opacity;
         })
         // (lib.optionalAttrs (builtins.hasAttr "group" baseMerged) {
             group = handleGroup rule.effects.static.group;
