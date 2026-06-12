@@ -27,6 +27,15 @@ let
     };
 in
 {
+    config = lib.mkIf cfg.enable {
+        assertions = [
+            {
+                assertion = true;
+                message = "nix-hyprland: Must either set `binds.mainMod.enable` to `true` or set `binds.mouse.keys` (because `binds.mouse.enable` is `true`)!";
+            }
+        ];
+    };
+
     options.nix-hyprland.binds =
         lib.attrsets.unionOfDisjoint (import ./config.nix { inherit lib mkNullOption; })
             {
@@ -92,13 +101,8 @@ in
                             description = "Which dispatcher MMB binds to.";
                         };
                     };
-                    keys = mkOption {
-                        type = types.nullOr types.nonEmptyStr;
-                        default =
-                            if !cfg.binds.mainMod.enable then
-                                throw "Must either enable `binds.mainMod.enable` or set `binds.mouse.keys` (since binds.mouse.enable is `true`)!"
-                            else
-                                null;
+                    keys = mkNullOption {
+                        type = types.nonEmptyStr;
                         description = "What keys to press together with a mouse click. A value of `null` will use `mainMod.value` if `mainMod.enable` is `true`, otherwise it will error.";
                     };
                 };
