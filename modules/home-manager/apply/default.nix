@@ -51,7 +51,12 @@ let
             general
             group
             input
+            animations
+            cursor
+            debug
+            ecosystem
             gestures
+            layout
             misc
             opengl
             quirks
