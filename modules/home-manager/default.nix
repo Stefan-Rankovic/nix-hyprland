@@ -67,38 +67,39 @@ let
     };
 in
 {
-    _module.args = {
-        inherit
-            checkHyprlandVersion
-            doubleElement
-            localTypes
-            luaFunctionArguments
-            mkNullOption
-            mkNullSubmodule
-            nonNullSubmodule
-            oneNonNullSubmodule
-            ;
-    };
-
     imports = [
         ./apply
         ./options
     ];
 
-    xdg.portal = {
-        inherit (cfg.xdg_portal) enable;
-        extraPortals = builtins.attrValues cfg.xdg_portal.extraPortals;
-        config.common.default = builtins.attrNames cfg.xdg_portal.extraPortals;
-    };
+    config = lib.mkMerge [
+        {
+            _module.args = {
+                inherit
+                    checkHyprlandVersion
+                    doubleElement
+                    localTypes
+                    luaFunctionArguments
+                    mkNullOption
+                    mkNullSubmodule
+                    nonNullSubmodule
+                    oneNonNullSubmodule
+                    ;
+            };
+        }
+        (lib.mkIf cfg.enable {
+            xdg.configFile."uwsm/env".source =
+                "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 
-    wayland.windowManager.hyprland = {
-        inherit (cfg)
-            enable
-            package
-            xwayland
-            ;
-        systemd.enable = false;
-        portalPackage = cfg.xdg_portal.package;
-    };
-    home.packages = lib.optional (cfg.enable && (cfg.uwsm.runner != null)) cfg.uwsm.runner;
+            wayland.windowManager.hyprland = {
+                inherit (cfg)
+                    enable
+                    package
+                    ;
+                systemd.enable = false;
+            };
+
+            home.packages = lib.optional (cfg.uwsm.runner != null) cfg.uwsm.runner;
+        })
+    ];
 }

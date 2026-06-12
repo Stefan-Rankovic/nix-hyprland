@@ -27,38 +27,14 @@ in
         package = mkNullOption {
             type = types.package;
             example = pkgs.hyprland;
-            description = "The hyprland package to use. If you use the nixos module, don't change this. Otherwise, set it.";
+            description = "The hyprland package to use. If you use the NixOS module, don't change this. Otherwise, set it.";
             apply = pkg: if pkg == null then pkg else checkHyprlandVersion pkg;
-        };
-        xdg_portal = {
-            enable = lib.mkEnableOption "XDG portal and integrate it with Hyprland";
-            package = mkOption {
-                type = types.nullOr types.package;
-                default = pkgs.xdg-desktop-portal-hyprland;
-                description = "The xdg-desktop-portal-hyprland package to use.";
-            };
-            extraPortals = mkOption {
-                type = types.attrsOf types.package;
-                default = with pkgs; {
-                    hyprland = xdg-desktop-portal-hyprland;
-                };
-                example = with pkgs; {
-                    hyprland = xdg-desktop-portal-hyprland;
-                    gtk = xdg-desktop-portal-gtk;
-                };
-                description = "Additional portals that should be added to the environment.";
-            };
         };
         uwsm.runner = mkNullOption {
             type = types.package;
             example = pkgs.runapp;
             description = "The program runner to use. If you don't want to use `uwsm app --`.";
         };
-        xwayland.enable =
-            lib.mkEnableOption "XWayland (this option overrides the one defined in the nixos module)"
-            // {
-                default = true;
-            };
 
         extraLuaConfigPre = mkOption {
             type = types.str;
