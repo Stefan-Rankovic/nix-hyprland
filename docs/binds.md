@@ -167,8 +167,8 @@ Instead, what you should do is define a bind to be a list of attribute sets:
 
 ```nix
 nix-hyprland.binds.list."..." = [
-    { exec_cmd.cmd = "..."; }
-    { window.kill = {}; }
+    { dsp.exec_cmd.cmd = "..."; }
+    { dsp.window.kill = {}; }
 ];
 ```
 
