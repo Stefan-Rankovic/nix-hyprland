@@ -31,6 +31,15 @@ nix-hyprland.binds = {
 };
 ```
 
+### Other Main Mod Values
+
+Not everyone likes `SUPER`. If you don't, don't fret! You can still use the
+`mainMod` feature. Just set `nix-hyprland.binds.mainMod.value` to any modifiers
+you want.
+
+`binds.mainMod.values` doesn't have to be a single modifier, it can be multiple
+as well. It follows the same syntax as `binds.list."..."`.
+
 > [!CAUTION]
 > Keep in mind that if `nix-hyprland.binds.mainMod.enable` is `true`, an
 > existing bind can't start with `nix-hyprland.binds.mainMod.value`. For
@@ -53,15 +62,6 @@ nix-hyprland.binds = {
 > ```
 >
 > Both of those binds will cause an error.
-
-### Other Main Mod Values
-
-Not everyone likes `SUPER`. If you don't, don't fret! You can still use the
-`mainMod` feature. Just set `nix-hyprland.binds.mainMod.value` to any modifiers
-you want.
-
-`binds.mainMod.values` doesn't have to be a single modifier, it can be multiple
-as well. It follows the same syntax as `binds.list."..."`.
 
 ### Exceptions
 
