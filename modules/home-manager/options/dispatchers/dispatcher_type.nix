@@ -9,7 +9,7 @@
     xNonNullSubmodule,
 }:
 
-xNonNullSubmodule {
+xNonNullSubmodule 1 {
     options = import ./all.nix {
         inherit
             lib
