@@ -54,5 +54,5 @@ This problem is not complicated to solve. You can do one of:
   recommend this because it's not complicated and you can use the feature now.
   See [Native Home Manager](./configuring.md#native-home-manager).
 - Use `extraLuaConfigPre` or `extraLuaConfigPost`. See
-  [Lua](./configuring.md#lua)
+  [Lua](./configuring.md#lua).
 - Wait for me to implement the feature. I do not recommend this.
