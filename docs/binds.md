@@ -158,10 +158,7 @@ nix-hyprland.binds.list."...".dsp = {
 };
 ```
 
-<!-- todo: remove when the issue is closed -->
-
-Because only one dispatcher is valid per bind (see
-[#1](https://github.com/Stefan-Rankovic/nix-hyprland/issues/1)).
+Because only one dispatcher is valid per bind.
 
 Instead, what you should do is define a bind to be a list of attribute sets:
 

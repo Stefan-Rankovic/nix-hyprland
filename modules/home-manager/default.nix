@@ -39,7 +39,6 @@ let
             inherit description;
         };
 
-    # todo: when https://github.com/NixOS/nixpkgs/issues/396021 gets fixed, update these to actually do something
     nonNullSubmodule = types.submodule;
     oneNonNullSubmodule = types.submodule;
 

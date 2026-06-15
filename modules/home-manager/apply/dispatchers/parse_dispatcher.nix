@@ -18,10 +18,7 @@ let
         assert builtins.length (builtins.attrNames filteredDsp) == 1;
         builtins.head (builtins.attrNames filteredDsp);
 in
-# todo: remove this when NonNullSubmodule actually does something
-if 1 != builtins.length (builtins.attrNames filteredDsp) then
-    throw "nix-hyprland: only one dispatcher valid per dispatcher. Faulty dispatcher JSON: ${builtins.toJSON dispatcher}"
-else if (firstLevelName == "raw_lua") then
+if (firstLevelName == "raw_lua") then
     lib.mkLuaInline dispatcher.${firstLevelName}.code
 else
     let
