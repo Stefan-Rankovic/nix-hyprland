@@ -76,7 +76,7 @@ in
     };
 
     move = mkNullOption {
-        type = xNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = {
                 direction = mkNullOption {
                     type = types.either localTypes.direction (
@@ -168,7 +168,7 @@ in
     };
 
     swap = mkNullOption {
-        type = xNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = {
                 direction = mkNullOption {
                     type = localTypes.direction;
