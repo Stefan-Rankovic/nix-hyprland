@@ -178,12 +178,12 @@ in
                     type = localTypes.window;
                     description = "Swap the current window with another one.";
                 };
-                next = mkNullOption {
-                    type = localTypes.unit;
+                next = mkDispatcher {
+                    options = { };
                     description = "Swap the current window with the next one.";
                 };
-                prev = mkNullOption {
-                    type = localTypes.unit;
+                prev = mkDispatcher {
+                    options = { };
                     description = "Swap the current window with the previous one.";
                 };
             };
@@ -219,8 +219,8 @@ in
         description = "Clear all tags from a window.";
     };
 
-    toggle_swallow = mkNullOption {
-        type = localTypes.unit;
+    toggle_swallow = mkDispatcher {
+        options = { };
         description = "Toggle all swallowed windows visible.";
     };
 

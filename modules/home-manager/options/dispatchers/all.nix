@@ -151,12 +151,12 @@ in
                     type = localTypes.window;
                     description = "Move the focus to a window.";
                 };
-                urgent_or_last = mkNullOption {
-                    type = localTypes.unit;
+                urgent_or_last = mkDispatcher {
+                    options = { };
                     description = "Move the focus to an urgent, or last window.";
                 };
-                last = mkNullOption {
-                    type = localTypes.unit;
+                last = mkDispatcher {
+                    options = { };
                     description = "Move the focus to the last window.";
                 };
             };
@@ -164,8 +164,8 @@ in
         description = "Move the focus.";
     };
 
-    exit = mkNullOption {
-        type = localTypes.unit;
+    exit = mkDispatcher {
+        options = { };
         description = ''
             Quit Hyprland. It’s recommended to use `hyprshutdown` instead of this.
 
@@ -261,8 +261,8 @@ in
         description = "sets elapsed time for all idle timers, ignoring idle inhibitors. Timers return to normal behavior upon the next activity. **Do not use with a keybind directly (see `dpms` description).**";
     };
 
-    no_op = mkNullOption {
-        type = localTypes.unit;
+    no_op = mkDispatcher {
+        options = { };
         description = "Does nothing. Useful for conditional binds.";
     };
 }
