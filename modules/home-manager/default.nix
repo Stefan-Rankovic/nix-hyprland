@@ -39,8 +39,43 @@ let
             inherit description;
         };
 
-    nonNullSubmodule = types.submodule;
-    oneNonNullSubmodule = types.submodule;
+    # todo: refactor these two functions when types.addCheck is fixed, on https://github.com/NixOS/nixpkgs/issues/396021. This should work too but addCheck is way cleaner.
+    nonNullSubmodule =
+        args:
+        let
+            base = types.submodule args;
+        in
+        base
+        // {
+            merge =
+                location: definitions:
+                let
+                    merged = base.merge location definitions;
+                in
+                lib.throwIf (lib.all (v: v == null) (
+                    lib.attrValues merged
+                )) "Option `${lib.showOption location}` requires at least one non-null value" merged;
+        };
+    xNonNullSubmodule =
+        expectedNonNullAmount: args:
+        let
+            base = types.submodule args;
+        in
+        base
+        // {
+            merge =
+                location: definitions:
+                let
+                    merged = base.merge location definitions;
+                    nonNulls = lib.filterAttrs (_: val: val != null) merged;
+                    nonNullAmount = lib.length (lib.attrValues nonNulls);
+                in
+                lib.throwIf (nonNullAmount != expectedNonNullAmount)
+                    "Option `${lib.showOption location}` requires exactly ${toString expectedNonNullAmount} non-null value${
+                        if expectedNonNullAmount != 1 then "s" else "" # Grammar
+                    }, got ${toString nonNullAmount}"
+                    merged;
+        };
 
     doubleElement =
         elementType:
@@ -82,7 +117,7 @@ in
                     mkNullOption
                     mkNullSubmodule
                     nonNullSubmodule
-                    oneNonNullSubmodule
+                    xNonNullSubmodule
                     ;
             };
         }

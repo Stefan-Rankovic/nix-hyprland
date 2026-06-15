@@ -6,7 +6,7 @@
     localTypes,
     mkNullOption,
     mkNullSubmodule,
-    oneNonNullSubmodule,
+    xNonNullSubmodule,
 }:
 
 let
@@ -51,7 +51,7 @@ in
     };
 
     cursor = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = import ./cursor.nix {
                 inherit
                     lib
@@ -64,7 +64,7 @@ in
     };
 
     group = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = import ./group.nix {
                 inherit
                     argPresets
@@ -79,7 +79,7 @@ in
     };
 
     window = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = import ./window.nix {
                 inherit
                     argPresets
@@ -88,14 +88,14 @@ in
                     mkDispatcher
                     mkNullOption
                     mkNullSubmodule
-                    oneNonNullSubmodule
+                    xNonNullSubmodule
                     ;
             };
         };
     };
 
     workspace = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = import ./workspace.nix {
                 inherit
                     lib
@@ -124,7 +124,7 @@ in
     };
 
     focus = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule 1 {
             options = {
                 direction = mkNullOption {
                     type = localTypes.direction;

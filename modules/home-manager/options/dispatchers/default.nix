@@ -6,7 +6,7 @@
     localTypes,
     mkNullOption,
     mkNullSubmodule,
-    oneNonNullSubmodule,
+    xNonNullSubmodule,
     ...
 }:
 
@@ -18,7 +18,7 @@ let
             localTypes
             mkNullOption
             mkNullSubmodule
-            oneNonNullSubmodule
+            xNonNullSubmodule
             ;
     };
 in

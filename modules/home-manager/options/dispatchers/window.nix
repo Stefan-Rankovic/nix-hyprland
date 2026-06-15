@@ -8,7 +8,7 @@
     mkDispatcher,
     mkNullOption,
     mkNullSubmodule,
-    oneNonNullSubmodule,
+    xNonNullSubmodule,
 }:
 
 let
@@ -76,7 +76,7 @@ in
     };
 
     move = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule {
             options = {
                 direction = mkNullOption {
                     type = types.either localTypes.direction (
@@ -168,7 +168,7 @@ in
     };
 
     swap = mkNullOption {
-        type = oneNonNullSubmodule {
+        type = xNonNullSubmodule {
             options = {
                 direction = mkNullOption {
                     type = localTypes.direction;

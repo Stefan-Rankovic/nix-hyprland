@@ -6,17 +6,17 @@
     localTypes,
     mkNullOption,
     mkNullSubmodule,
-    oneNonNullSubmodule,
+    xNonNullSubmodule,
 }:
 
-oneNonNullSubmodule {
+xNonNullSubmodule {
     options = import ./all.nix {
         inherit
             lib
             localTypes
             mkNullOption
             mkNullSubmodule
-            oneNonNullSubmodule
+            xNonNullSubmodule
             ;
     };
 }

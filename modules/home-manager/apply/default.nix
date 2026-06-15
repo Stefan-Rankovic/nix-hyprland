@@ -8,7 +8,7 @@
     luaFunctionArguments,
     mkNullOption,
     mkNullSubmodule,
-    oneNonNullSubmodule,
+    xNonNullSubmodule,
     ...
 }:
 
@@ -31,7 +31,7 @@ let
             luaFunctionArguments
             mkNullOption
             mkNullSubmodule
-            oneNonNullSubmodule
+            xNonNullSubmodule
             ;
     };
     dispatchers = import ./dispatchers {
