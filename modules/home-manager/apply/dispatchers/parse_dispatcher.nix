@@ -14,9 +14,7 @@ let
 
     # === Extract name ===
     # Gets the dsp name (as the only key left inside filteredDsp)
-    firstLevelName =
-        assert builtins.length (builtins.attrNames filteredDsp) == 1;
-        builtins.head (builtins.attrNames filteredDsp);
+    firstLevelName = builtins.head (builtins.attrNames filteredDsp);
 in
 if (firstLevelName == "raw_lua") then
     lib.mkLuaInline dispatcher.${firstLevelName}.code
@@ -29,11 +27,9 @@ else
         isTopLevel = builtins.hasAttr "unnamed" allArguments.${firstLevelName};
         # Nested name, if one
         subName =
-            assert builtins.length (builtins.attrNames filteredDsp) == 1;
             if isTopLevel then null else builtins.head (builtins.attrNames filteredDsp.${firstLevelName});
         # Actual function that takes care of cases such as `window` not being the actual dsp name, but instead `kill` (in `window.kill`).
         name =
-            assert builtins.length (builtins.attrNames filteredDsp) == 1;
             if isTopLevel then
                 firstLevelName
             else
@@ -47,7 +43,6 @@ else
 
         # === Extract value ===
         dsp =
-            assert builtins.length (builtins.attrNames filteredDsp) == 1;
             let
                 firstLevelDsp = builtins.head (builtins.attrValues filteredDsp);
             in
