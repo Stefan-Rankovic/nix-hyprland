@@ -198,6 +198,7 @@ in
 
     cycle_next = mkDispatcher {
         options = {
+            # todo: are these booleans or...?
             next = mkNullOption { type = localTypes.unit; };
             tiled = mkNullOption { type = localTypes.unit; };
             floating = mkNullOption { type = localTypes.unit; };
