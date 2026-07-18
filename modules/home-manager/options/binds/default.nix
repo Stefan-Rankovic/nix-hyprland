@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     lib,
     localTypes,
     mkNullOption,
@@ -13,8 +13,6 @@
 
 let
     inherit (lib) mkEnableOption mkOption types;
-
-    cfg = config.nix-hyprland;
 
     bindType = import ./bind_type.nix {
         inherit
@@ -36,7 +34,7 @@ in
         ];
     };
 
-    options.nix-hyprland.binds =
+    options.programs.nix-hyprland.binds =
         lib.attrsets.unionOfDisjoint (import ./config.nix { inherit lib mkNullOption; })
             {
                 mainMod = {

@@ -35,7 +35,7 @@ let
     };
 in
 {
-    options.nix-hyprland.rules.unnamed = mkOption {
+    options.programs.nix-hyprland.rules.unnamed = mkOption {
         type = types.submodule {
             options = {
                 layer = mkOption {

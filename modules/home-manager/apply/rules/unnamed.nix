@@ -2,15 +2,11 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     filterNullsRecursive,
     lib,
 }:
-assert builtins.isFunction filterNullsRecursive;
 
-let
-    cfg = config.nix-hyprland;
-in
 lib.concatStringsSep "\n" (
     (map (
         rule:

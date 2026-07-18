@@ -2,14 +2,11 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     filterNullsRecursive,
     lib,
 }:
 
-let
-    cfg = config.nix-hyprland;
-in
 lib.concatStringsSep "\n" (
     lib.mapAttrsToList (
         name: rule:

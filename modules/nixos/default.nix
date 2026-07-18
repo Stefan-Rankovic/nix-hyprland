@@ -9,7 +9,7 @@ checkHyprlandVersion:
 }:
 
 let
-    cfg = config.nix-hyprland;
+    cfg = config.programs.nix-hyprland;
 in
 {
     imports = [

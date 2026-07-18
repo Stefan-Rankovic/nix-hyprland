@@ -11,7 +11,7 @@ checkHyprlandVersion:
 let
     inherit (lib) types;
 
-    cfg = config.nix-hyprland;
+    cfg = config.programs.nix-hyprland;
 
     mkNullOption =
         args:
@@ -76,6 +76,7 @@ in
         {
             _module.args = {
                 inherit
+                    cfg
                     checkHyprlandVersion
                     doubleElement
                     localTypes

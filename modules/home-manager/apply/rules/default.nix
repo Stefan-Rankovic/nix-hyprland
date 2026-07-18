@@ -2,17 +2,17 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     filterNullsRecursive,
     lib,
 }:
 
 let
-    layerRules = import ./layer { inherit config filterNullsRecursive lib; };
-    windowRules = import ./window { inherit config filterNullsRecursive lib; };
-    workspaceRules = import ./workspace { inherit config filterNullsRecursive lib; };
+    layerRules = import ./layer { inherit cfg filterNullsRecursive lib; };
+    windowRules = import ./window { inherit cfg filterNullsRecursive lib; };
+    workspaceRules = import ./workspace { inherit cfg filterNullsRecursive lib; };
 
-    unnamedRules = import ./unnamed.nix { inherit config filterNullsRecursive lib; };
+    unnamedRules = import ./unnamed.nix { inherit cfg filterNullsRecursive lib; };
 in
 lib.concatStringsSep "\n" [
     layerRules

@@ -26,7 +26,7 @@ let
     };
 in
 {
-    options.nix-hyprland.rules.window = mkOption {
+    options.programs.nix-hyprland.rules.window = mkOption {
         type = types.attrsOf windowRuleType;
         default = { };
     };

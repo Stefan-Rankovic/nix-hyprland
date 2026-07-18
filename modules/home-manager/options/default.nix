@@ -22,7 +22,7 @@ in
         ./rules
     ];
 
-    options.nix-hyprland = {
+    options.programs.nix-hyprland = {
         enable = lib.mkEnableOption "nix-hyprland";
         package = mkNullOption {
             type = types.package;

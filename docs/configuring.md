@@ -58,8 +58,9 @@ _should_ work with nix-hyprland too.
 
 You may be dissatisfied with nix-hyprland's implementation of something, and
 refuse to use a feature it provides (either due to your preference, it being
-bugged, etc.). In such case, you can use `nix-hyprland.extraLuaConfigPre` and
-`nix-hyprland.extraLuaConfigPost` to write Lua code directly.
+bugged, etc.). In such case, you can use
+`programs.nix-hyprland.extraLuaConfigPre` and
+`programs.nix-hyprland.extraLuaConfigPost` to write Lua code directly.
 
 ## Variables
 
@@ -67,7 +68,7 @@ This refers to [these](https://wiki.hypr.land/Configuring/Basics/Variables/).
 You can set them like:
 
 ```nix
-nix-hyprland = {
+programs.nix-hyprland = {
     decoration.rounding_power = 3.7;
     general.border_size = 10;
     input.touchdevice.enabled = true;

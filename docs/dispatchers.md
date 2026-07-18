@@ -11,7 +11,7 @@ Using them in a `dispatch` call would run the action at Hyprland startup. An
 example would be:
 
 ```nix
-nix-hyprland.dispatchers = [
+programs.nix-hyprland.dispatchers = [
     { submap.name = "custom_submap"; }
     { cursor.move = { x = 1000; y = 1000; }; }
 ];
@@ -24,7 +24,7 @@ There are some dispatchers that can take no arguments (e.g. `exit` or
 (`{}`). For example:
 
 ```nix
-nix-hyprland = {
+programs.nix-hyprland = {
     dispatchers = [
         { exit = {}; }
     ];
@@ -40,7 +40,7 @@ it as you have direct access to Lua code. But here you don't. To use it, you can
 do (copied from the `dpms` dispatcher description):
 
 ```nix
-nix-hyprland.binds."...".dsp.raw_lua = ''
+programs.nix-hyprland.binds."...".dsp.raw_lua = ''
     function()
         hl.timer(function()
             hl.dispatch(hl.dsp.dpms({ action = "disable" }))

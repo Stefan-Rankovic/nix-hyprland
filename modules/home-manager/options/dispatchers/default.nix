@@ -23,7 +23,7 @@ let
     };
 in
 {
-    options.nix-hyprland.dispatchers = mkOption {
+    options.programs.nix-hyprland.dispatchers = mkOption {
         type = types.listOf dispatcherType;
         default = [ ];
         description = "Dispatcher calls to add to the resulting Lua file.";

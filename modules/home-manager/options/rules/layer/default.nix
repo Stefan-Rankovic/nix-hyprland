@@ -22,7 +22,7 @@ let
     };
 in
 {
-    options.nix-hyprland.rules.layer = mkOption {
+    options.programs.nix-hyprland.rules.layer = mkOption {
         type = types.attrsOf layerRuleType;
         default = { };
     };
