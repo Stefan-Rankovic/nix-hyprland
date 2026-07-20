@@ -13,7 +13,7 @@ let
 in
 {
 
-    options.nix-hyprland = {
+    options.programs.nix-hyprland = {
         enable = mkEnableOption "nix-hyprland";
         package = mkOption {
             type = types.package;

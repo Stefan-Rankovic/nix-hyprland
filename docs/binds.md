@@ -7,7 +7,7 @@ These are configured using attribute sets. For example:
 
 ```nix
 # The option is named `binds.list`, but the type is an attribute set
-nix-hyprland.binds.list = {
+programs.nix-hyprland.binds.list = {
     "SUPER + T".dsp.exec_cmd.cmd = "uwsm app -- kitty";
     "SUPER + B".dsp.exec_cmd.cmd = "uwsm app -- firefox";
 };
@@ -22,7 +22,7 @@ I actually prefix my binds with `SUPER` so often, I made a shortcut for that.
 The above example configuration has the same output as:
 
 ```nix
-nix-hyprland.binds = {
+programs.nix-hyprland.binds = {
     mainMod.enable = true;
     list = {
         "T".dsp.exec_cmd.cmd = "uwsm app -- kitty";
@@ -34,19 +34,19 @@ nix-hyprland.binds = {
 ### Other Main Mod Values
 
 Not everyone likes `SUPER`. If you don't, don't fret! You can still use the
-`mainMod` feature. Just set `nix-hyprland.binds.mainMod.value` to any modifiers
-you want.
+`mainMod` feature. Just set `programs.nix-hyprland.binds.mainMod.value` to any
+modifiers you want.
 
 `binds.mainMod.values` doesn't have to be a single modifier, it can be multiple
 as well. It follows the same syntax as `binds.list."..."`.
 
 > [!CAUTION]
-> Keep in mind that if `nix-hyprland.binds.mainMod.enable` is `true`, an
-> existing bind can't start with `nix-hyprland.binds.mainMod.value`. For
-> example, this is not allowed:
+> Keep in mind that if `programs.nix-hyprland.binds.mainMod.enable` is `true`,
+> an existing bind can't start with `programs.nix-hyprland.binds.mainMod.value`.
+> For example, this is not allowed:
 >
 > ```nix
-> nix-hyprland.binds = {
+> programs.nix-hyprland.binds = {
 >     mainMod = {
 >         enable = true;
 >         value = "ALT";
@@ -69,7 +69,7 @@ Some binds should not use the `mainMod`. For example, `XF86AudioRaiseVolume`. In
 that case, you can set `useMainMod = false` per bind:
 
 ```nix
-nix-hyprland.binds.list."XF86AudioRaiseVolume" = {
+programs.nix-hyprland.binds.list."XF86AudioRaiseVolume" = {
     useMainMod = false;
     dsp.exec_cmd.cmd = "...";
 };
@@ -84,12 +84,12 @@ The mouse-related `resize()` and `drag()` dispatchers don't exist, so you can't
 bind a mouse key to them. Instead, mouse binds are defined using `binds.mouse`,
 separate from the other binds in `binds.list`.
 
-Setting `nix-hyprland.binds.mouse.enable` to `true` will bind "mainMod +
-left-click" to `drag()` and "mainMod + right-click" to `resize()`. To swap that
-behavior, you can do:
+Setting `programs.nix-hyprland.binds.mouse.enable` to `true` will bind
+"mainMod + left-click" to `drag()` and "mainMod + right-click" to `resize()`. To
+swap that behavior, you can do:
 
 ```nix
-nix-hyprland.binds.mouse = {
+programs.nix-hyprland.binds.mouse = {
     lmb.action = "resize";
     rmb.action = "drag";
 };
@@ -102,7 +102,7 @@ Setting both `mouse.lmb` and `mouse.rmb` to the same thing is also supported.
 > the bind to the same key combination. For example, this is not allowed:
 >
 > ```nix
-> nix-hyprland.binds = {
+> programs.nix-hyprland.binds = {
 >     mouse.enable = true;
 >     mainMod.enable = true;
 >     list."mouse:272" = { ... };
@@ -113,7 +113,7 @@ If binding LMB/RMB is not desirable, you can disable one (or both) of them. An
 example configuration like that would be:
 
 ```nix
-nix-hyprland.binds.mouse = {
+programs.nix-hyprland.binds.mouse = {
     enable = true;
     lmb.enable = false;
 };
@@ -124,14 +124,14 @@ nix-hyprland.binds.mouse = {
 `mainMod.value` is used because just binding left-click or right-click makes no
 sense. If `mainMod.enable` is `false` though, you will get an error!
 
-To avoid that, you can set `nix-hyprland.binds.mouse.keys` to a string (e.g.
-`"ALT"` or `"SUPER"`).
+To avoid that, you can set `programs.nix-hyprland.binds.mouse.keys` to a string
+(e.g. `"ALT"` or `"SUPER"`).
 
 For example, to bind only "ALT + left-click" to `resize()`, you would do:
 
 ```nix
 # Suppose binds.mainMod.enable is false
-nix-hyprland.binds.mouse = {
+programs.nix-hyprland.binds.mouse = {
     keys = "ALT";
     lmb.action = "resize";
     rmb.enable = false;
@@ -141,9 +141,9 @@ nix-hyprland.binds.mouse = {
 ### Middle Mouse Button
 
 The middle mouse button is not bound by default. You can enable it with
-`nix-hyprland.binds.mouse.mmb.enable = true;` which will bind it to `drag` by
-default. You can change that to `resize` using the same syntax as above
-(`nix-hyprland.binds.mouse.mmb.action = "resize";`).
+`programs.nix-hyprland.binds.mouse.mmb.enable = true;` which will bind it to
+`drag` by default. You can change that to `resize` using the same syntax as
+above (`programs.nix-hyprland.binds.mouse.mmb.action = "resize";`).
 
 ## Multiple Binds Per Key
 
@@ -152,7 +152,7 @@ You may want to bind some key combination to use two
 that is not possible by simply doing something like:
 
 ```nix
-nix-hyprland.binds.list."...".dsp = {
+programs.nix-hyprland.binds.list."...".dsp = {
     exec_cmd.cmd = "...";
     window.kill = {};
 };
@@ -163,7 +163,7 @@ Because only one dispatcher is valid per bind.
 Instead, what you should do is define a bind to be a list of attribute sets:
 
 ```nix
-nix-hyprland.binds.list."..." = [
+programs.nix-hyprland.binds.list."..." = [
     { dsp.exec_cmd.cmd = "..."; }
     { dsp.window.kill = {}; }
 ];

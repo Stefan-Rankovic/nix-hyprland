@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     filterNullsRecursive,
     lib,
     localTypes,
@@ -13,8 +13,6 @@
 }:
 
 let
-    cfg = config.nix-hyprland;
-
     bindType = import ../../options/binds/bind_type.nix {
         inherit
             lib
@@ -87,7 +85,7 @@ lib.concatStringsSep "\n" (
                 import ./parse_bind.nix {
                     inherit
                         bind
-                        config
+                        cfg
                         filterNullsRecursive
                         lib
                         keys

@@ -27,12 +27,12 @@ Like every other flake, it must be added to the `inputs` section of your
 ## NixOS
 
 Import `inputs.nix-hyprland.nixosModules.default` somewhere inside your NixOS
-configuration, and set `nix-hyprland.enable` to `true`.
+configuration, and set `programs.nix-hyprland.enable` to `true`.
 
 ## Home Manager
 
 Import `inputs.nix-hyprland.homeManagerModules.default` somewhere inside your
-Home Manager configuration and set `nix-hyprland.enable` to `true`.
+Home Manager configuration and set `programs.nix-hyprland.enable` to `true`.
 
 ## Universal Wayland Session Manager (UWSM)
 

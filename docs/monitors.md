@@ -11,7 +11,7 @@ Defining a simple monitor might look like (example values gotten from the
 Hyprland wiki):
 
 ```nix
-nix-hyprland.monitors = [
+programs.nix-hyprland.monitors = [
     {
         output = "DP-1";
         mode = "1920x1080@144";

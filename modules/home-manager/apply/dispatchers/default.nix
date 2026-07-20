@@ -2,15 +2,12 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     filterNullsRecursive,
     lib,
     luaFunctionArguments,
 }:
 
-let
-    cfg = config.nix-hyprland;
-in
 lib.concatStringsSep "\n" (
     map (
         dispatcher:

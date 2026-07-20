@@ -22,7 +22,7 @@ let
     };
 in
 {
-    options.nix-hyprland.rules.workspace = mkOption {
+    options.programs.nix-hyprland.rules.workspace = mkOption {
         type = types.attrsOf (types.either workspaceRuleType (types.listOf workspaceRuleType));
         default = { };
     };

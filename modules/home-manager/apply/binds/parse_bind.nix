@@ -3,7 +3,7 @@
 
 {
     bind,
-    config,
+    cfg,
     filterNullsRecursive,
     lib,
     luaFunctionArguments,
@@ -11,8 +11,6 @@
 }:
 
 let
-    cfg = config.nix-hyprland;
-
     # === Keys ===
     useMainMod = (bind.useMainMod == true) || (bind.useMainMod != false && cfg.binds.mainMod.enable);
     actualKeys = if useMainMod then "${cfg.binds.mainMod.value} + ${keys}" else keys;

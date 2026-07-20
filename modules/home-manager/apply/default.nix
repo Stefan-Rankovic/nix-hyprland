@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Stefan Rankovic <stefi.rankovic@proton.me>
 
 {
-    config,
+    cfg,
     lib,
     localTypes,
     luaFunctionArguments,
@@ -13,8 +13,6 @@
 }:
 
 let
-    cfg = config.nix-hyprland;
-
     filterNullsRecursive =
         attrs:
         lib.pipe attrs [
@@ -24,7 +22,7 @@ let
 
     binds = import ./binds {
         inherit
-            config
+            cfg
             filterNullsRecursive
             lib
             localTypes
@@ -36,14 +34,14 @@ let
     };
     dispatchers = import ./dispatchers {
         inherit
-            config
+            cfg
             filterNullsRecursive
             lib
             luaFunctionArguments
             ;
     };
-    monitors = import ./monitors { inherit config filterNullsRecursive lib; };
-    rules = import ./rules { inherit config filterNullsRecursive lib; };
+    monitors = import ./monitors { inherit cfg filterNullsRecursive lib; };
+    rules = import ./rules { inherit cfg filterNullsRecursive lib; };
 
     others = {
         inherit (cfg)

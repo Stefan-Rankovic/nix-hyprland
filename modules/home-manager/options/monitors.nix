@@ -139,7 +139,7 @@ let
     };
 in
 {
-    options.nix-hyprland.monitors = mkOption {
+    options.programs.nix-hyprland.monitors = mkOption {
         type = types.listOf monitorType;
         default = [ ];
         description = "The monitors. See [the hyprland wiki](https://wiki.hypr.land/Configuring/Basics/Monitors/).";

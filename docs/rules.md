@@ -13,7 +13,7 @@ are all unnamed), the name of an element represents what workspace(s) to match
 to.
 
 ```nix
-nix-hyprland.rules = {
+programs.nix-hyprland.rules = {
     window."float-kitty" = {
         match.initialClass = "kitty"; # Matching on multiple things is supported
         effects.static.float = true; # Multiple effects are supported
@@ -29,7 +29,7 @@ This section does not apply to workspace rules, because they are all unnamed.
 To define unnamed window or layer rules, use a list:
 
 ```nix
-nix-hyprland.rules.unnamed.window = {
+programs.nix-hyprland.rules.unnamed.window = {
     {
         match.initialClass = "kitty";
         effects.static.fullscreen = true;
